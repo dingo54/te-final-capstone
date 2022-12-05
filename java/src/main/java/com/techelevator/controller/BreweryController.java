@@ -2,10 +2,9 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.BreweryDao;
 import com.techelevator.model.Brewery;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -21,5 +20,20 @@ public class BreweryController {
     @RequestMapping(path = "/brewery", method = RequestMethod.GET)
     public List<Brewery> getAllBreweries(){
         return breweryDao.getAllBreweries();
+    }
+    @RequestMapping(path = "/brewery", method = RequestMethod.POST)
+    public Brewery addBrewery(@RequestBody Brewery brewery) {
+        if (brewery != null) {
+            breweryDao.addBrewery(brewery);
+        }
+        return brewery;
+    }
+
+    @RequestMapping(path = "/brewery/{breweryId}", method = RequestMethod.PUT)
+    public void updateBrewery(@PathVariable int breweryId, @RequestBody Brewery brewery){
+        if(breweryId != brewery.getBreweryId()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Brewery Id not found");
+        }
+        breweryDao.updateBrewery(breweryId, brewery);
     }
 }

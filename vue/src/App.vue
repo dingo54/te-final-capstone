@@ -27,10 +27,10 @@
     margin: 0;
 }
 body {
-    background-color: rgba(240,242,245,1);
+    background-color: rgba(0,0,0,1);
 }
 header {
-    background-image: linear-gradient(to top, rgba(240,242,245,1), rgba(240,242,245,0) 30%), url("assets/banner-cropped.jpg");
+    background-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0) 30%), url("assets/banner-cropped.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   height: 400px;
@@ -110,7 +110,7 @@ article {
     margin: 15px 0;
 }
 .login {
-  max-width: 500px;
+  max-width: 400px;
   margin: 0 auto;
   padding: 25px;
   border-radius: 20px;
@@ -147,6 +147,7 @@ article {
   border-radius: 5px;
   font-weight: bold;
   border: none;
+  cursor: pointer;
 }
 .green {
   background-color: green;
