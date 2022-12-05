@@ -1,6 +1,7 @@
 <template>
   <div id="register" class="text-center">
-    <form class="form-register" @submit.prevent="register">
+    <section class="page">
+      <form class="form-register" @submit.prevent="register">
       <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
@@ -37,6 +38,7 @@
         Create Account
       </button>
     </form>
+    </section>
   </div>
 </template>
 
