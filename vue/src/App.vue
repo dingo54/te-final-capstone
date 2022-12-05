@@ -7,8 +7,9 @@
         </div>
         <div>
           <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
-        <router-link v-bind:to="{name: 'login' }" v-if="$store.state.token == ''">Login</router-link>&nbsp;|&nbsp;
-        <router-link v-bind:to="{name: 'register' }" v-if="$store.state.token == ''">Register</router-link>
+          <router-link v-bind:to="{name: 'login' }" v-if="$store.state.token == ''">Login</router-link>
+          <span v-if="$store.state.token == ''">&nbsp;|&nbsp;</span>
+          <router-link v-bind:to="{name: 'register' }" v-if="$store.state.token == ''">Register</router-link>
         </div>
       </nav>
     <h1><router-link v-bind:to="{ name: 'home' }">Brewery Finder</router-link></h1>
@@ -108,14 +109,52 @@ article {
 .page p {
     margin: 15px 0;
 }
-
 .login {
-  max-width: 700px;
+  max-width: 500px;
   margin: 0 auto;
   padding: 25px;
   border-radius: 20px;
   background-color: white;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.form-signin,
+.form-register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.login h1 {
+  text-align: center;
+  font-size: 40px;
+}
+.alert {
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 5px;
+}
+.alert-danger {
+  background-color: red;
+  color: white;
+}
+.alert-success {
+  background-color: green;
+  color: white;
+}
+.button {
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  border: none;
+}
+.green {
+  background-color: green;
+  color: white;
+}
+.blue {
+  background-color: blue;
+  color: white;
 }
 @media screen and (max-width: 900px) {
     article {
