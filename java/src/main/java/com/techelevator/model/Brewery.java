@@ -1,10 +1,12 @@
 package com.techelevator.model;
 
 public class Brewery {
+    private int breweryId;
     private String breweryName;
     private String imageURL;
     private String phoneNumber;
     private String address;
+
 
     public Brewery(){
 
@@ -15,6 +17,14 @@ public class Brewery {
         this.imageURL = imageURL;
         this.phoneNumber = phoneNumber;
         this.address = address;
+    }
+
+    public int getBreweryId() {
+        return breweryId;
+    }
+
+    public void setBreweryId(int breweryId) {
+        this.breweryId = breweryId;
     }
 
     public String getBreweryName() {
