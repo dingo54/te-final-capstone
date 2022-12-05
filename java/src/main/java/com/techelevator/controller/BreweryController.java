@@ -2,7 +2,9 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.BreweryDao;
 import com.techelevator.model.Brewery;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -25,5 +27,13 @@ public class BreweryController {
             breweryDao.addBrewery(brewery);
         }
         return brewery;
+    }
+
+    @RequestMapping(path = "/brewery/{breweryId}", method = RequestMethod.PUT)
+    public void updateBrewery(@PathVariable int breweryId, @RequestBody Brewery brewery){
+        if(breweryId != brewery.getBreweryId()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Brewery Id not found");
+        }
+        breweryDao.updateBrewery(breweryId, brewery);
     }
 }
