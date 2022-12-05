@@ -84,10 +84,11 @@ article {
     background-color: white;
     display: block;
     margin: 10px;
-    padding: 10px;
     width: 400px;
     height: 200px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    position: relative;
+    overflow: hidden;
 }
 
 .page {
