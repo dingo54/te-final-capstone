@@ -24,7 +24,7 @@ public class JdbcBreweryDao implements BreweryDao{
     @Override
     public List<Brewery> getAllBreweries() {
         List<Brewery> breweries = new ArrayList<>();
-        String sql = "SELECT brewery_name, image_url, phone_number, address FROM breweries;";
+        String sql = "SELECT brewery_id, brewery_name, image_url, phone_number, address FROM breweries;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql);
         while(result.next()){
             breweries.add(mapToBrewery(result));
@@ -49,6 +49,7 @@ public class JdbcBreweryDao implements BreweryDao{
     private Brewery mapToBrewery(SqlRowSet results){
         try {
             Brewery brewery = new Brewery();
+            brewery.setBreweryId(results.getInt("brewery_id"));
             brewery.setAddress(results.getString("address"));
             brewery.setBreweryName(results.getString("brewery_name"));
             brewery.setImageURL(results.getString("image_url"));
