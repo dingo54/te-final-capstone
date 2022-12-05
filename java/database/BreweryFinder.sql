@@ -7,7 +7,7 @@ CREATE TABLE brewery (
     brewery_name varchar(64) NOT NULL,
     phone_number varchar(14) NOT NULL,
     address varchar(64) NOT NULL,
-    image_url varchar(100) NULL,
+    image_url text NULL,
 
     CONSTRAINT pk_brewery PRIMARY KEY (brewery_id)
 );
@@ -32,6 +32,19 @@ CREATE TABLE brewery_beer (
     CONSTRAINT fk_brewery_beer_brewery_id FOREIGN KEY (brewery_id) REFERENCES brewery (brewery_id),
     CONSTRAINT fk_brewery_beer_beer_id FOREIGN KEY (beer_id) REFERENCES beer (beer_id)
 );
+
+/***********************************************************************************************************
+ Populating brewewry table with 8 members
+***********************************************************************************************************/
+INSERT INTO public.brewery(brewery_name, phone_number, address, image_url, birthday, reminder) VALUES
+	('The Salty Spitoon', '(561)-532-1958', '1515 Arch St #11, Philadelphia, PA 19102', 'https://imgur.com/gallery/dtArU'),
+	('Krusty Krab', '(561)-532-1958', '1515 Arch St #11, Philadelphia, PA 19102', 'https://imgur.com/gallery/dtArU'),
+	('Chum Bucket', '(561)-532-1958', '1515 Arch St #11, Philadelphia, PA 19102', 'https://imgur.com/gallery/dtArU'),
+	('Sandys\'s', '(561)-532-1958', '1515 Arch St #11, Philadelphia, PA 19102', 'https://imgur.com/gallery/dtArU'),
+	('Goodfellas', '(561)-532-1958', '1515 Arch St #11, Philadelphia, PA 19102', 'https://imgur.com/gallery/dtArU'),
+	('Weenie Hut General', '(561)-532-1958', '1515 Arch St #11, Philadelphia, PA 19102', 'https://imgur.com/gallery/dtArU'),
+	('The Salty Spitoon', '(561)-532-1958', '1515 Arch St #11, Philadelphia, PA 19102', 'https://imgur.com/gallery/dtArU'),
+	('The Salty Spitoon', '(561)-532-1958', '1515 Arch St #11, Philadelphia, PA 19102', 'https://imgur.com/gallery/dtArU'),
 
 COMMIT;
 
