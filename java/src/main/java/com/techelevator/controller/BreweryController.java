@@ -14,7 +14,7 @@ import java.util.List;
 public class BreweryController {
     private BreweryDao breweryDao;
 
-    public BreweryController(BreweryDao breweryDao) {
+    public BreweryController(BreweryDao breweryDao){
         this.breweryDao = breweryDao;
     }
 
