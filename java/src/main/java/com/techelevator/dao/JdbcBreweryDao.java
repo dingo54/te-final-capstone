@@ -63,8 +63,15 @@ public class JdbcBreweryDao implements BreweryDao{
     }
 
     @Override
-    public Brewery updateBrewery(int breweryId, Brewery brewery) {
-        return null;
+    public boolean updateBrewery(int breweryId, Brewery brewery) {
+        String sql ="UPDATE public.brewery\n" +
+                "\tSET brewery_name=?, phone_number=?, address=?, image_url=?\n" +
+                "\tWHERE brewery_id = ?;";
+        int numberOfRowsUpdated = jdbcTemplate.update(sql, brewery.getBreweryName(),brewery.getPhoneNumber(),brewery.getAddress(),brewery.getImageURL(), breweryId);
+
+
+
+        return numberOfRowsUpdated == 1;
     }
     private Brewery mapToBrewery(SqlRowSet results){
         try {
