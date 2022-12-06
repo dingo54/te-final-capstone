@@ -12,7 +12,7 @@
           <router-link v-bind:to="{name: 'register' }" v-if="$store.state.token == ''">Register</router-link>
         </div>
       </nav>
-    <h1><router-link v-bind:to="{ name: 'home' }">Brewery Finder</router-link></h1>
+    <h1><router-link v-bind:to="{ name: 'home' }">Philadelphia Brewery Guide</router-link></h1>
     </header>
     <main>
       <router-view />
@@ -39,7 +39,7 @@ header {
 header h1 {
     text-align: center;
     line-height: 300px;
-    font-size: 10vw;
+    font-size: 7vw;
 }
 header h1 a {
     color: white;
@@ -80,7 +80,7 @@ main #cards {
     justify-content: center;
     flex-wrap: wrap;
 }
-article {
+main #cards article {
     background-color: white;
     display: block;
     margin: 10px;
@@ -89,6 +89,7 @@ article {
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .page {
