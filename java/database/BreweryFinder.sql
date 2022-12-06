@@ -22,13 +22,16 @@ CREATE TABLE time (
 );
 
 CREATE TABLE beer (
+    beer_id serial NOT NULL,
     brewery_id int NOT NULL,
     name varchar(64) NOT NULL,
     style varchar(64) NULL,
     price money NULL,
     abv float(2) NULL,
     image text NULL,
-    description varchar(1000) NULL
+    description varchar(1000) NULL,
+
+    CONSTRAINT pk_beer PRIMARY KEY (beer_id)
 );
 
 /***********************************************************************************************************
@@ -49,7 +52,7 @@ INSERT INTO public.brewery(brewery_name, phone_number, address, image_url, descr
 	('Scorsese', '(215) 236-3300', '2027 Fairmount Ave, Philadelphia, PA 19130', 'https://i.gyazo.com/06338bb792245ca0d26af0f7dea44dc6.jpg',
 	'We love craft beer! Our tap room is designed to be a comfortable place to hang out with family and friends. Come, play in our backyard! Please feel free to bring your own food, have some delivered, or come to enjoy one of our frequent food truck events.'),
 	('Goodfellas', '(215) 922-2317', '1136 Arch St, Philadelphia, PA 19107', 'https://i.gyazo.com/d75fc55c47a9ea82c3b52bf2c3d2eea0.png',
-	'We always called each other good fellas. Since the 80''s, two college buds Tony and Artie decided to brew some beef for their friends. Whether it was natural talent or the endless supply of suds, people liked what they tasted and wanted more. They didn''t know it at the time, but this was the beginning of what was to become Goodfellas.');
+	'We always called each other good fellas. Since the 80''s, two college buds Tony and Artie decided to brew some beer for their friends. Whether it was natural talent or the endless supply of suds, people liked what they tasted and wanted more. They didn''t know it at the time, but this was the beginning of what was to become Goodfellas.');
 
 /***********************************************************************************************************
  Populating beer
