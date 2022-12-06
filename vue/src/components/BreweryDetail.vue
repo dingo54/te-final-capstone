@@ -4,10 +4,11 @@
       <img v-bind:src="brewery.imageURL" />
       <div class="brewery-info">
           <h2>{{ brewery.breweryName }}</h2>
+          <h3 id="address"><i class="fa-solid fa-location-dot blue"></i> {{ brewery.address }}</h3>
         <h3><i class="fa-solid fa-phone blue"></i> {{ brewery.phoneNumber }}</h3>
-        <h3 id="address"><i class="fa-solid fa-location-dot blue"></i> {{ brewery.address }}</h3>
+        <h3 id="hours"><i class="fa-solid fa-clock blue"></i> Hours coming soon</h3>
         
-        <h4><i class="fa-solid fa-star"></i> Avg Rating and Reviews here</h4>
+        <h4><i class="fa-solid fa-star"></i> Avg Rating and # of Reviews here</h4>
       </div>
     </div>
     <div id="page-main">

@@ -1,16 +1,16 @@
 <template>
   <div>
     <section id="cards">
-      <article 
+      <article class="brewery-card" 
         v-for="brewery in breweries" 
         v-bind:key="brewery.breweryId"
         v-on:click="viewBreweryDetail(brewery.breweryId)"
       >
         <div class="info">
           <h2>{{ brewery.breweryName }}</h2>
-          <p>{{ brewery.address }}</p>
-          <p style="flex-grow:1;">{{ brewery.phoneNumber }}</p>
-          <p><i class="fa-solid fa-star"></i>Avg Rating and Reviews here</p>
+          <p><i class="fa-solid fa-location-dot blue"></i> {{ brewery.address }}</p>
+          <p style="flex-grow:1;"><i class="fa-solid fa-phone blue"></i> {{ brewery.phoneNumber }}</p>
+          <p><i class="fa-solid fa-star"></i>Avg Rating and # Reviews here</p>
         </div>
         <img v-bind:src="brewery.imageURL" class="brewery-image" />
       </article>
@@ -39,7 +39,3 @@ export default {
   },
 };
 </script>
-
-<style>
-
-</style>

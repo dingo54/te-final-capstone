@@ -124,6 +124,7 @@ main #cards article {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 5px;
 }
 .info h2 {
   color:var(--yellow);
@@ -238,7 +239,7 @@ main #cards article {
 .brewery-info h3 {
   font-size: 30px;
 }
-.brewery-info #address {
+.brewery-info #hours {
   flex-grow: 1;
 }
 /************************* Beer List ********************************************/
@@ -256,10 +257,11 @@ main #cards article {
 .beer img {
   height: 200px;
 }
+
 /************************* Device Breakpoints (screen size) ********************************************/
 @media screen and (max-width: 900px) {
-    article {
-        width: 90%;
+    .brewery-card {
+        width: 90% !important;
     }
 }
 </style>
