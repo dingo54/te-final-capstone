@@ -1,43 +1,82 @@
 <template>
   <section class="page">
-      <h2>{{this.$store.state.brewery}}</h2>
-      <p>Testing</p>
+    <div id="page-header">
+      <img v-bind:src="brewery.imageURL" />
+      <div class="brewery-info">
+        <h2>{{ brewery.breweryName }}</h2>
+        <h3><i class="fa-solid fa-phone"></i> {{ brewery.phoneNumber }}</h3>
+        <h3><i class="fa-solid fa-location-dot"></i> {{ brewery.address }}</h3>
+        <h4>Avg Rating and Reviews here</h4>
+      </div>
+    </div>
+    <div id="page-main">
+      <h3>Our History</h3>
+      <p>{{ brewery.description }}</p>
+      <h3>Beer List Here</h3>
+    </div>
+    
   </section>
 </template>
 
 <script>
-  import breweryService from "../services/BreweryService";
+import breweryService from "../services/BreweryService";
 
 export default {
   name: "brewery-detail",
   data() {
     return {
-      errorMsg: ""
-    }
+      errorMsg: "",
+    };
   },
   methods: {
     retrieveBrewery() {
       breweryService
-        .getBrewery(this.$route.params.breweryID)
-        .then(response => {
+        .getBrewery(this.$route.params.id)
+        .then((response) => {
           this.$store.commit("SET_CURRENT_BREWERY", response.data);
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response && error.response.status === 404) {
             alert(
               "Brewery not available. This card may have been deleted or you have entered an invalid brewery ID."
             );
-            this.$router.push({ name: 'Home' });
+            this.$router.push({ name: "Home" });
           }
-        })
-    }
+        });
+    },
   },
   created() {
     this.retrieveBrewery();
-  }
-}
+  },
+  computed: {
+    brewery() {
+      return this.$store.state.brewery;
+    },
+  },
+};
 </script>
 
 <style>
-
+#page-header {
+  height: 400px;
+  overflow: hidden;
+}
+.brewery-info {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 20px;
+  height: 360px;
+  font-family: Montserrat, sans-serif;
+  font-size: 20px;
+}
+.brewery-info h2 {
+  font-size: 30px;
+}
+.brewery-info h3 {
+  margin-top: 10px;
+  font-size: 30px;
+}
 </style>
