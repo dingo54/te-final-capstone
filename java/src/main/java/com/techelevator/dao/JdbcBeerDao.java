@@ -20,8 +20,9 @@ public class JdbcBeerDao implements BeerDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
     @Override
-    public List<Beer> getAllBeers() {
+    public List<Beer> getListOfBeers() {
         List<Beer> beers = new ArrayList<>();
         String sql = "SELECT beer_id, brewery_id, name, style, price, abv, image, description\n" +
                 "\tFROM public.beer;";
@@ -46,24 +47,54 @@ public class JdbcBeerDao implements BeerDao {
 
     @Override
     public Beer addBeer(Beer beer) {
-        return null;
+        Beer newBeer = new Beer();
+        newBeer.setBeerId(beer.getBeerId());
+        newBeer.setBreweryId(beer.getBeerId());
+        newBeer.setStyle(beer.getStyle());
+        newBeer.setName(beer.getName());
+        newBeer.setPrice(beer.getPrice());
+        newBeer.setImage(beer.getImage());
+        newBeer.setDescription(beer.getDescription());
+        newBeer.setAbv(beer.getAbv());
+        String sql="INSERT INTO public.beer(\n" +
+                "\tbrewery_id, name, style, price, abv, image, description)\n" +
+                "\tVALUES (?, ?, ?, ?, ?, ?, ?) RETURNING beer_id;";
+        int beer_id = jdbcTemplate.queryForObject(sql,int.class, newBeer.getBreweryId(),newBeer.getName(),newBeer.getStyle(),newBeer.getPrice(),newBeer.getAbv(),newBeer.getImage(),newBeer.getDescription());
+        newBeer.setBeerId(beer_id);
+        return newBeer;
     }
 
     @Override
-    public boolean updateBeer(Beer beer) {
-        return false;
+    public boolean updateBeer(int beerId, Beer beer) {
+            Beer newBeer = new Beer();
+            newBeer.setBeerId(beer.getBeerId());
+            newBeer.setBreweryId(beer.getBeerId());
+            newBeer.setStyle(beer.getStyle());
+            newBeer.setName(beer.getName());
+            newBeer.setPrice(beer.getPrice());
+            newBeer.setImage(beer.getImage());
+            newBeer.setDescription(beer.getDescription());
+            newBeer.setAbv(beer.getAbv());
+            String sql="UPDATE public.beer\n" +
+                    "\tSET brewery_id=?, name=?, style=?, price=?, abv=?, image=?, description=?\n" +
+                    "\tWHERE beer_id=?;";
+            int rowsUpdated = jdbcTemplate.update(sql,newBeer.getBreweryId(),newBeer.getName(),newBeer.getStyle(),newBeer.getPrice(),newBeer.getAbv(),newBeer.getImage(),newBeer.getDescription(),newBeer.getBeerId());
+            return rowsUpdated==1;
+
     }
     public Beer mapRowToBeer(SqlRowSet rowSet){
         try {
             Beer beer = new Beer();
             beer.setBeerId(rowSet.getInt("beer_id"));
-            beer.setAbv(rowSet.getDouble("abv"));
             beer.setBreweryId(rowSet.getInt("brewery_id"));
-            beer.setDescription(rowSet.getString("description"));
-            beer.setImage(rowSet.getString("image"));
-            beer.setMoney(rowSet.getBigDecimal("price"));
             beer.setName(rowSet.getString("name"));
             beer.setStyle(rowSet.getString("style"));
+            if (rowSet.getBigDecimal("price") != null) {
+                beer.setPrice(rowSet.getBigDecimal("price"));
+            }
+            beer.setAbv(rowSet.getDouble("abv"));
+            beer.setImage(rowSet.getString("image"));
+            beer.setDescription(rowSet.getString("description"));
             return beer;
         }catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
