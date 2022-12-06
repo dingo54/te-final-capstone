@@ -26,7 +26,7 @@ public class JdbcBreweryDao implements BreweryDao{
     @Override
     public List<Brewery> getAllBreweries() {
         List<Brewery> breweries = new ArrayList<>();
-        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url\n" +
+        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description\n" +
                 "\tFROM public.brewery;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql);
         while(result.next()){
@@ -38,7 +38,7 @@ public class JdbcBreweryDao implements BreweryDao{
     @Override
     public Brewery getBreweryById(int breweryId) {
         Brewery brewery = new Brewery();
-        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url\n" +
+        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description\n" +
                 "\tFROM public.brewery WHERE brewery_id = ?;";
         SqlRowSet result= jdbcTemplate.queryForRowSet(sql, breweryId);
         while(result.next()){
@@ -55,9 +55,9 @@ public class JdbcBreweryDao implements BreweryDao{
         newBrewery.setBreweryName(brewery.getBreweryName());
         newBrewery.setAddress(brewery.getBreweryName());
         String sql="INSERT INTO public.brewery(\n" +
-                "\tbrewery_name, phone_number, address, image_url)\n" +
+                "\tbrewery_name, phone_number, address, image_url, description)\n" +
                 "\tVALUES (?, ?, ?, ?) RETURNING brewery_id;";
-        int breweryId = jdbcTemplate.queryForObject(sql, int.class, newBrewery.getBreweryName(),newBrewery.getPhoneNumber(),newBrewery.getAddress(),newBrewery.getImageURL());
+        int breweryId = jdbcTemplate.queryForObject(sql, int.class, newBrewery.getBreweryName(),newBrewery.getPhoneNumber(),newBrewery.getAddress(),newBrewery.getImageURL(), newBrewery.getDescription());
         newBrewery.setBreweryId(breweryId);
         return newBrewery;
     }
@@ -65,9 +65,9 @@ public class JdbcBreweryDao implements BreweryDao{
     @Override
     public boolean updateBrewery(int breweryId, Brewery brewery) {
         String sql ="UPDATE public.brewery\n" +
-                "\tSET brewery_name=?, phone_number=?, address=?, image_url=?\n" +
-                "\tWHERE brewery_id = ?;";
-        int numberOfRowsUpdated = jdbcTemplate.update(sql, brewery.getBreweryName(),brewery.getPhoneNumber(),brewery.getAddress(),brewery.getImageURL(), breweryId);
+                "\tSET brewery_id=?, brewery_name=?, phone_number=?, address=?, image_url=?, description=?\n" +
+                "\tWHERE brewery_id =?;";
+        int numberOfRowsUpdated = jdbcTemplate.update(sql, brewery.getBreweryName(),brewery.getPhoneNumber(),brewery.getAddress(),brewery.getImageURL(), brewery.getDescription(), breweryId);
 
 
 
@@ -81,6 +81,7 @@ public class JdbcBreweryDao implements BreweryDao{
             brewery.setBreweryName(results.getString("brewery_name"));
             brewery.setImageURL(results.getString("image_url"));
             brewery.setPhoneNumber(results.getString("phone_number"));
+            brewery.setDescription(results.getString("description"));
             return brewery;
         }catch(Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);

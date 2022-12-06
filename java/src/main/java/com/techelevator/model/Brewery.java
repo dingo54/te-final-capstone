@@ -6,7 +6,7 @@ public class Brewery {
     private String imageURL;
     private String phoneNumber;
     private String address;
-
+    private String description;
 
     public Brewery(){
 
@@ -17,6 +17,14 @@ public class Brewery {
         this.imageURL = imageURL;
         this.phoneNumber = phoneNumber;
         this.address = address;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getBreweryId() {
