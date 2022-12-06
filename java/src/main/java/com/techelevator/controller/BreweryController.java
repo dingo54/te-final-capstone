@@ -21,6 +21,12 @@ public class BreweryController {
     public List<Brewery> getAllBreweries(){
         return breweryDao.getAllBreweries();
     }
+
+    @RequestMapping(path = "/brewery/{breweryId}", method = RequestMethod.GET)
+    public Brewery getAllBreweriesById(@PathVariable int breweryId){
+        return breweryDao.getBreweryById(breweryId);
+    }
+
     @RequestMapping(path = "/brewery", method = RequestMethod.POST)
     public Brewery addBrewery(@RequestBody Brewery brewery) {
         if (brewery != null) {

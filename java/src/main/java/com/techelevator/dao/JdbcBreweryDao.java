@@ -14,11 +14,6 @@ import java.util.List;
 public class JdbcBreweryDao implements BreweryDao{
     private JdbcTemplate jdbcTemplate;
 
-    /*private String breweryName;
-    private String imageURL;
-    private String phoneNumber;
-    private String address;*/
-
     public JdbcBreweryDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
