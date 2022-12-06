@@ -96,8 +96,9 @@ main #cards article {
     max-width: 900px;
     margin: 0 auto;
     background-color: white;
-    padding: 10px 20px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    position: relative;
+    z-index: 1;
 }
 .page .header {
     display: flex;
@@ -110,6 +111,9 @@ main #cards article {
 }
 .page p {
     margin: 15px 0;
+}
+#page-main {
+  padding: 10px 20px;
 }
 .login {
   max-width: 400px;

@@ -1,5 +1,7 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
 public class Beer {
@@ -7,7 +9,7 @@ public class Beer {
     private int breweryId;
     private String name;
     private String style;
-    private BigDecimal money;
+    private BigDecimal price;
     private double abv;
     private String image;
     private String description;
@@ -15,12 +17,12 @@ public class Beer {
     public Beer(){
 
     }
-    public Beer(int beerId, int breweryId, String name, String style, BigDecimal money, double abv, String image, String description) {
+    public Beer(int beerId, int breweryId, String name, String style, BigDecimal price, double abv, String image, String description) {
         this.beerId = beerId;
         this.breweryId = breweryId;
         this.name = name;
         this.style = style;
-        this.money = money;
+        this.price = price;
         this.abv = abv;
         this.image = image;
         this.description = description;
@@ -58,12 +60,12 @@ public class Beer {
         this.style = style;
     }
 
-    public BigDecimal getMoney() {
-        return money;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setMoney(BigDecimal money) {
-        this.money = money;
+    public void setPrice(BigDecimal price) {
+        this.price=price;
     }
 
     public double getAbv() {
