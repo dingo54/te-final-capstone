@@ -241,6 +241,21 @@ main #cards article {
 .brewery-info #address {
   flex-grow: 1;
 }
+/************************* Beer List ********************************************/
+.beer {
+  border-bottom: 5px solid var(--blue);
+  padding: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px
+}
+.beer:last-child {
+  border: none;
+}
+.beer img {
+  height: 200px;
+}
 /************************* Device Breakpoints (screen size) ********************************************/
 @media screen and (max-width: 900px) {
     article {

@@ -1,5 +1,5 @@
 <template>
-  <section class="page">
+  <div>
     <div id="page-header">
       <img v-bind:src="brewery.imageURL" />
       <div class="brewery-info">
@@ -11,19 +11,11 @@
       </div>
     </div>
     <div id="page-main">
-      <h3>Our History</h3>
+      <h2>Our History</h2>
       <p>{{ brewery.description }}</p>
-      <h3>Our Beers</h3>
-      <p>{{beers}}</p>
-      <article
-        v-for="beer in beers"
-        v-bind:key="beer.beerId"
-      >
-        <h3>{{this.beer.name}}</h3>
-      </article>
     </div>
     
-  </section>
+  </div>
 </template>
 
 <script>
@@ -33,8 +25,7 @@ export default {
   name: "brewery-detail",
   data() {
     return {
-      errorMsg: "",
-      beers: []
+      errorMsg: ""
     };
   },
   methods: {
@@ -55,11 +46,6 @@ export default {
   },
   created() {
     this.retrieveBrewery();
-    breweryService
-      .getBeerForBrewery(this.$route.params.id)
-      .then(response => {
-        this.beers = response.data;
-      });
   },
   computed: {
     brewery() {
