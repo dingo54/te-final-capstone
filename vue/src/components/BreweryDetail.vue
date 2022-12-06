@@ -13,6 +13,7 @@
       <h3>Our History</h3>
       <p>{{ brewery.description }}</p>
       <h3>Beer List Here</h3>
+      <p>{{beers.length}}</p>
     </div>
     
   </section>
@@ -32,26 +33,43 @@ export default {
     retrieveBrewery() {
       breweryService
         .getBrewery(this.$route.params.id)
-        .then((response) => {
+        .then(response => {
           this.$store.commit("SET_CURRENT_BREWERY", response.data);
         })
-        .catch((error) => {
+        .catch(error => {
           if (error.response && error.response.status === 404) {
             alert(
-              "Brewery not available. This card may have been deleted or you have entered an invalid brewery ID."
+              "Brewery not available. It may have been deleted or you have entered an invalid brewery ID."
             );
-            this.$router.push({ name: "Home" });
           }
         });
     },
+    retrieveBeers() {
+      breweryService
+        .getBeerForBrewery(this.$route.params.id)
+        .then(response => {
+          this.$Store.commit("SET_CURRENT_BEERS", response.data);
+        })
+        .catch(error => {
+          if (error.response && error.response.status === 404) {
+            alert(
+              "Brewery not available. It may have been deleted or you have entered an invalid brewery ID."
+            );
+          }
+        });
+    }
   },
   created() {
     this.retrieveBrewery();
+    this.retrieveBeers();
   },
   computed: {
     brewery() {
       return this.$store.state.brewery;
     },
+    beers() {
+      return this.$store.state.beers;
+    }
   },
 };
 </script>
