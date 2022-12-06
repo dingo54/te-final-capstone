@@ -1,7 +1,11 @@
 <template>
   <div>
     <section id="cards">
-      <article v-for="brewery in breweries" v-bind:key="brewery.id">
+      <article 
+        v-for="brewery in breweries" 
+        v-bind:key="brewery.breweryId"
+        v-on:click="viewBreweryDetail(brewery.breweryId)"
+      >
         <div class="info">
           <h2>{{ brewery.breweryName }}</h2>
           <p>{{ brewery.address }}</p>
@@ -21,6 +25,11 @@ export default {
     return {
       breweries: [],
     };
+  },
+  methods: {
+    viewBreweryDetail(breweryID) {
+      this.$router.push(`/brewery/${breweryID}`)
+    }
   },
   created() {
     breweryService.getBreweries().then((response) => {

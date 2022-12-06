@@ -6,12 +6,16 @@ const http = axios.create({
 
 export default {
 
+    register(user) {
+    return http.post('/register', user)
+  },
+
   getBreweries() {
     return http.get('/brewery')
   },
 
-  register(user) {
-    return http.post('/register', user)
+  getBrewery(breweryID) {
+    return http.get(`/brewery/${breweryID}`)
   }
 
 }
