@@ -3,7 +3,7 @@
     <header>
       <nav>
         <div>
-          <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+          <!--<router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;-->
         </div>
         <div>
           <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
@@ -22,15 +22,26 @@
 </template>
 
 <style>
+:root{
+    --yellow: #e5b435;
+    --blue: blue;
+    --site-background-color: rgba(0,0,0,1);
+    --page-header-font: Montserrat, sans-serif;
+    --site-header-font: Ubuntu, sans-serif;
+    --main-font: Roboto Slab, sans-serif;
+    --info-background: rgba(0,0,0,0.5);
+}
 *{
     padding: 0;
     margin: 0;
 }
 body {
-    background-color: rgba(0,0,0,1);
+    background-color: var(--site-background-color);
+    font-family: var(--main-font);
 }
+/********************************************** Header **********************************************/
 header {
-    background-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0) 30%), url("assets/banner-cropped.jpg");
+    background-image: linear-gradient(to top, var(--site-background-color), rgba(0,0,0,0) 30%), url("assets/banner-cropped.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   height: 400px;
@@ -40,14 +51,19 @@ header h1 {
     text-align: center;
     line-height: 300px;
     font-size: 7vw;
+    font-family: var(--site-header-font);
+    font-weight: 900;
 }
 header h1 a {
-    color: white;
+    color: var(--yellow);
     text-decoration: none;
+    
+    text-shadow: 2px 2px black;
 }
+/********************************************** Nav **********************************************/
 nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     color: white;
     padding: 20px;
 }
@@ -63,6 +79,7 @@ nav label,
 #sort-options a {
     color: white;
 }
+/********************************************** Main **********************************************/
 main {
     margin-top: -70px;
     position: relative;
@@ -75,6 +92,10 @@ main {
     color: white;
     margin: 0 50px;
 }
+.fa-star {
+  color: var(--yellow);
+}
+/********************************************** Brewery List Cards **********************************************/
 main #cards {
     display: flex;
     justify-content: center;
@@ -90,8 +111,24 @@ main #cards article {
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    font-family: var(--page-header-font);
 }
-
+.info {
+    position: absolute;
+    z-index: 2;
+    padding: 0 5px;
+    background-color: var(--info-background);
+    color: white;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.info h2 {
+  color:var(--yellow);
+}
+/********************************************** Page **********************************************/
 .page {
     max-width: 900px;
     margin: 0 auto;
@@ -115,12 +152,13 @@ main #cards article {
 #page-main {
   padding: 10px 20px;
 }
+/********************************************** Login/Register **********************************************/
 .login {
   max-width: 400px;
   margin: 0 auto;
   padding: 25px;
   border-radius: 20px;
-  background-color: white;
+  background-color: var(--yellow);
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 .form-signin,
@@ -133,6 +171,7 @@ main #cards article {
 .login h1 {
   text-align: center;
   font-size: 40px;
+  font-family: var(--page-header-font);
 }
 .alert {
   margin: 5px 0;
@@ -154,15 +193,55 @@ main #cards article {
   font-weight: bold;
   border: none;
   cursor: pointer;
-}
-.green {
-  background-color: green;
   color: white;
+  background-color: var(--blue);
 }
 .blue {
-  background-color: blue;
-  color: white;
+  color: blue;
+  -webkit-text-stroke: 2px white;
 }
+.brewery-image {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/********************************************** Brewery Page **********************************************/
+#page-header {
+  height: 400px;
+  overflow: hidden;
+}
+#page-header img {
+  width: 100%;
+}
+.brewery-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  background-color: var(--info-background);
+  color: white;
+  padding: 20px;
+  height: 360px;
+  font-family: var(--page-header-font);
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+}
+.brewery-info h2 {
+  font-size: 30px;
+  color: var(--yellow);
+}
+.brewery-info h3 {
+  font-size: 30px;
+}
+.brewery-info #address {
+  flex-grow: 1;
+}
+/************************* Device Breakpoints (screen size) ********************************************/
 @media screen and (max-width: 900px) {
     article {
         width: 90%;

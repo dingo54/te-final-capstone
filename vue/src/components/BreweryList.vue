@@ -9,7 +9,8 @@
         <div class="info">
           <h2>{{ brewery.breweryName }}</h2>
           <p>{{ brewery.address }}</p>
-          <p>{{ brewery.phoneNumber }}</p>
+          <p style="flex-grow:1;">{{ brewery.phoneNumber }}</p>
+          <p><i class="fa-solid fa-star"></i>Avg Rating and Reviews here</p>
         </div>
         <img v-bind:src="brewery.imageURL" class="brewery-image" />
       </article>
@@ -40,19 +41,5 @@ export default {
 </script>
 
 <style>
-.brewery-image {
-  width: 100%;
-  position: relative;
-  z-index: 1;
-}
-.info {
-    position: absolute;
-    z-index: 2;
-    padding: 5px;
-    background-color: rgba(255,255,255,0.7);
-    width: 100%;
-}
-.info h2 {
 
-}
 </style>
