@@ -39,7 +39,14 @@
             required
           />
         </div>
-
+        <div>
+          <label>Choose a type of account: </label>
+          <Select>
+            <option></option>
+            <option>Regular User Account</option>
+            <option>Brewery Owner</option>
+          </Select>
+        </div>
         <router-link :to="{ name: 'login' }">Have an account?</router-link>
         <button class="button" type="submit">
           Create Account
