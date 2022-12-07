@@ -7,6 +7,7 @@ public class Brewery {
     private String phoneNumber;
     private String address;
     private String description;
+    private boolean isApproved;
 
     public Brewery(){
 
@@ -66,6 +67,10 @@ public class Brewery {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public boolean getIsApproved() {return isApproved;}
+
+    public void setIsApproved(boolean approved) {isApproved = approved;}
 
     @Override
     public String toString() {

@@ -74,9 +74,23 @@ public class JdbcBreweryDao implements BreweryDao{
             brewery.setImageURL(results.getString("image_url"));
             brewery.setPhoneNumber(results.getString("phone_number"));
             brewery.setDescription(results.getString("description"));
+            brewery.setIsApproved(results.getBoolean("is_approved"));
             return brewery;
         }catch(Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
+    @Override
+    public List <Brewery> getAllBreweriesByUserId(int userId) {
+        List <Brewery> brewery = new ArrayList<>();
+        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description, is_approved, owner\n" +
+                "\tFROM public.brewery\n" +
+                "\tWHERE owner = ?;";
+        SqlRowSet result= jdbcTemplate.queryForRowSet(sql, userId);
+        while(result.next()){
+           brewery.add(mapToBrewery(result));
+        }
+        return brewery;
+    }
+
 }

@@ -12,6 +12,8 @@ public interface BreweryDao {
     Brewery addBrewery(Brewery brewery);
     boolean updateBrewery(int breweryId, Brewery brewery);
 
+    List<Brewery> getAllBreweriesByUserId(int userId);
+
 
 
 }
