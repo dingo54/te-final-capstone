@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS favorites, brewery_reviews, beer_reviews, brewery_beer, beer, brewery, time;
+DROP TABLE IF EXISTS favorites, brewery_reviews, beer_reviews, brewery_beer, beer, brewery, time, users;
 
 CREATE TABLE brewery (
     brewery_id serial NOT NULL,
@@ -12,6 +12,15 @@ CREATE TABLE brewery (
     owner int NULL,
 
     CONSTRAINT pk_brewery PRIMARY KEY (brewery_id)
+);
+
+CREATE TABLE users (
+	user_id SERIAL,
+	username varchar(50) NOT NULL UNIQUE,
+	password_hash varchar(200) NOT NULL,
+	role varchar(50) NOT NULL,
+	is_brewer boolean NOT NULL, 
+	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
 CREATE TABLE brewery_reviews (
@@ -69,6 +78,15 @@ CREATE TABLE beer_reviews (
     CONSTRAINT fk_beer_review_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
+
+INSERT INTO users (username,password_hash,role,is_brewer) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER',false);
+INSERT INTO users (username,password_hash,role,is_brewer) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN',false);
+INSERT INTO users (username,password_hash,role,is_brewer) VALUES ('user3','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER',false);
+INSERT INTO users (username,password_hash,role,is_brewer) VALUES ('user4','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER',false);
+INSERT INTO users (username,password_hash,role,is_brewer) VALUES ('user5','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER',false);
+INSERT INTO users (username,password_hash,role,is_brewer) VALUES ('user6','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER',false);
+
+
 /***********************************************************************************************************
  Populating brewewry table with 8 breweries
 ***********************************************************************************************************/
@@ -107,7 +125,7 @@ INSERT INTO public.beer(brewery_id, name, style, price, abv, image, description)
     (3, 'Star Jockey', 'Galaxy Hop Hazy IPA', 5, 7.2, 'https://i.gyazo.com/3191a211edea1ea8d9a8e7a064723052.png', 'Brewed with Cosmic Punch™ and infused with Galaxy hops, this rocket is ready to ride, buckaroo. So saddle up and hold fast! We don''t blast off, we blast ON! And ON! And ON! Across the universe and beyond.'),
     (3, 'VERY MEGA', 'SUPER DELUXE MEGA AWESOME BEER', 5, 9.2, 'https://i.gyazo.com/7d2c12b225e59305c9b9736243c96699.png', 'ENTERING THE RING WEIGHING IN AT 9.2%, THE 2X IPA CHAMPION OF THE MEGAVERSE, VEEERRRYYY MEGA! SWOLE WITH MEGA TROPICAL NOTES! MEGA CITRUS NOTES! VERY MEGA WILL PILEDRIVE YOUR TASTE BUDDIES WITH MEGA HOP AROMAS AND FLAVOR! QUAFF HARD, PEOPLE!'),
     (3, 'Philly Standard', 'Beer', 4, 4.5, 'https://i.gyazo.com/1ea055b1ed376a2061c28d13efaa3d6c.png', 'Sometimes you just want a beer. No bells. No whistles. Just a good, handcrafted, no-nonsense beer that works just as hard as you do. Light. Clean. Easy. The standard beer for every occasion.'),
-    (4, 'Love City Lager', 'American Golden Lager', 5, 4, NULL, 'Love City Lager is brewed for everybody. Our American Golden Lager is simple, clean, and true to its roots. Lightly malty and a hint of orange aromatics give every bright sip a clean landing.'),
+    (4, 'Love City Lager', 'American Golden Lager', 5, 4, 'https://images.squarespace-cdn.com/content/v1/586d0eeb6a49637ca198ec9e/1612825171549-9XJRD1M096DWAJM9CVVA/LCB_LOVECITY_LAGER_2019+copy.jpg?format=300w', 'Love City Lager is brewed for everybody. Our American Golden Lager is simple, clean, and true to its roots. Lightly malty and a hint of orange aromatics give every bright sip a clean landing.'),
     (4, 'Lime City Lager', 'Lime-infused Lager', 6, 4, NULL, 'That feeling you get when surrounded by good friends & sunshine! Made with lime and sea salt for a bright, refreshing taste. The perfect beer for warm weather & good times.'),
     (4, 'Sure Shot', 'Kölsch', 7, 4.4, NULL, 'The ultimate session beer! Refreshing and light-bodied, our Kölsch is balanced with pilsner malt and features subtle fruit and spice character.'),
     (4, 'Deep Cut', 'Pilsner', 7, 5, NULL, 'Pilsner is the beer that brewers reach for. Like a musician’s favorite track, it’s a Deep Cut. This one is made with all German malt and hops. Lightly bready malt character with floral and herbal hop notes. It’s crisp, complex & crushable.'),
