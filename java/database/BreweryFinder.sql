@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS favorites, brewery_reviews, beer_reviews, brewery_beer, beer, brewery, time;
+DROP TABLE IF EXISTS favorites, brewery_reviews, beer_reviews, brewery_beer, beer, brewery, time, users;
 
 CREATE TABLE brewery (
     brewery_id serial NOT NULL,
@@ -12,6 +12,15 @@ CREATE TABLE brewery (
     owner int NULL,
 
     CONSTRAINT pk_brewery PRIMARY KEY (brewery_id)
+);
+
+CREATE TABLE users (
+	user_id SERIAL,
+	username varchar(50) NOT NULL UNIQUE,
+	password_hash varchar(200) NOT NULL,
+	role varchar(50) NOT NULL,
+	is_brewer boolean NOT NULL DEFAULT false, 
+	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
 CREATE TABLE brewery_reviews (
@@ -68,6 +77,15 @@ CREATE TABLE beer_reviews (
     CONSTRAINT fk_beer_review_beer_id FOREIGN KEY (beer_id) REFERENCES beer (beer_id),
     CONSTRAINT fk_beer_review_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
+
+
+INSERT INTO users (username,password_hash,role,is_brewer) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER',false);
+INSERT INTO users (username,password_hash,role,is_brewer) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN',false);
+INSERT INTO users (username,password_hash,role,is_brewer) VALUES ('user3','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER',false);
+INSERT INTO users (username,password_hash,role,is_brewer) VALUES ('user4','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER',false);
+INSERT INTO users (username,password_hash,role,is_brewer) VALUES ('user5','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER',false);
+INSERT INTO users (username,password_hash,role,is_brewer) VALUES ('user6','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER',false);
+
 
 /***********************************************************************************************************
  Populating brewewry table with 8 breweries
