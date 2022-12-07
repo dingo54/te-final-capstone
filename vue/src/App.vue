@@ -25,7 +25,7 @@
 :root{
     --yellow: #e5b435;
     --blue: blue;
-    --site-background-color: rgba(0,0,0,1);
+    --site-background-color: rgba(30,30,30,1);
     --page-header-font: Montserrat, sans-serif;
     --site-header-font: Ubuntu, sans-serif;
     --main-font: Roboto Slab, sans-serif;
