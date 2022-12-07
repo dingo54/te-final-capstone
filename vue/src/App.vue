@@ -112,6 +112,7 @@ main #cards article {
     overflow: hidden;
     cursor: pointer;
     font-family: var(--page-header-font);
+    border: 1px solid var(--yellow);
 }
 .info {
     position: absolute;
@@ -159,7 +160,7 @@ main #cards article {
   margin: 0 auto;
   padding: 25px;
   border-radius: 20px;
-  background-color: var(--yellow);
+  background-color: white;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 .form-signin,
@@ -246,16 +247,24 @@ main #cards article {
 .beer {
   border-bottom: 5px solid var(--blue);
   padding: 5px 0;
-  display: flex;
+   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px
+
 }
 .beer:last-child {
   border: none;
 }
-.beer img {
-  height: 200px;
+
+.beer-info {
+  display: block;
+}
+.beer-image-container {
+  border: none;
+}
+.beer-image-container img {
+  width: 200px;
+  height: auto;
 }
 
 /************************* Device Breakpoints (screen size) ********************************************/

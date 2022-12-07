@@ -9,13 +9,16 @@
         <h4>${{ beer.price }}</h4>
         <p>{{ beer.description }}</p>
       </div>
-      <img v-bind:src="beer.image" />
+      <div class="beer-image-container">
+        <img v-bind:src="beer.image" v-if="beer.image !== null" />
+        <img src="../assets/mug.png" v-if="beer.image === null" />
+      </div>
     </article>
   </div>
 </template>
 
 <script>
-import breweryService from "../services/BreweryService";
+import beerService from "../services/BeerService";
 export default {
   name: "beer-list",
   data() {
@@ -24,7 +27,7 @@ export default {
     };
   },
   created() {
-    breweryService.getBeerForBrewery(this.$route.params.id).then((response) => {
+    beerService.getBeerForBrewery(this.$route.params.id).then((response) => {
       this.beers = response.data;
     });
   },
