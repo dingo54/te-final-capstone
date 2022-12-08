@@ -33,8 +33,8 @@ public class JdbcBreweryDao implements BreweryDao{
     @Override
     public Brewery getBreweryById(int breweryId) {
         Brewery brewery = new Brewery();
-        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description\n" +
-                "\tFROM public.brewery WHERE brewery_id = ?;";
+        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description, is_approved, owner " +
+                "FROM public.brewery WHERE brewery_id = ?;";
         SqlRowSet result= jdbcTemplate.queryForRowSet(sql, breweryId);
         while(result.next()){
             brewery = mapToBrewery(result);
@@ -58,13 +58,15 @@ public class JdbcBreweryDao implements BreweryDao{
     }
 
     @Override
-    public boolean updateBrewery(int breweryId, Brewery brewery) {
-        String sql ="UPDATE public.brewery\n" +
-                "\tSET brewery_name=?, phone_number=?, address=?, image_url=?, description=?\n" +
-                "\tWHERE brewery_id =?;";
-        int numberOfRowsUpdated = jdbcTemplate.update(sql, brewery.getBreweryName(),brewery.getPhoneNumber(),brewery.getAddress(),brewery.getImageURL(), brewery.getDescription(), breweryId);
-        return numberOfRowsUpdated == 1;
+    public Brewery updateBrewery(int breweryId, Brewery brewery) {
+        String sql ="UPDATE public.brewery " +
+                "SET brewery_name=?, phone_number=?, address=?, image_url=?, description=? " +
+                "WHERE brewery_id =?;";
+        int numOfRowsUpdated = jdbcTemplate.update(sql, brewery.getBreweryName(),brewery.getPhoneNumber(),brewery.getAddress(),brewery.getImageURL(), brewery.getDescription(), breweryId);
+
+        return getBreweryById(breweryId);
     }
+
     private Brewery mapToBrewery(SqlRowSet results){
         try {
             Brewery brewery = new Brewery();
@@ -92,6 +94,24 @@ public class JdbcBreweryDao implements BreweryDao{
            brewery.add(mapToBrewery(result));
         }
         return brewery;
+    }
+
+    @Override
+    public Brewery create(Brewery brewery, int ownerId) {
+        String name = brewery.getBreweryName();
+        String number = brewery.getPhoneNumber();
+        String address = brewery.getAddress();
+        String image = brewery.getImageURL();
+        String description = brewery.getDescription();
+        boolean defaultIsApproved = false;
+        String sql = "INSERT INTO public.brewery( " +
+                "brewery_name, phone_number, address, image_url, description, is_approved, owner) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING brewery_id;";
+
+        int newBreweryId = jdbcTemplate.queryForObject(sql, Integer.class, name, number, address,
+                    image, description, defaultIsApproved, ownerId);
+
+        return getBreweryById(newBreweryId);
     }
 
 }
