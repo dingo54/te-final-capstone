@@ -28,11 +28,10 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(path = "/admin", method = RequestMethod.GET)
     public List<Brewery> getBrewer(){
-
         return breweryDao.getAllBreweries();
     }
 
-    //Admin can update existing breweries approved status to true
+    //Admin can update existing breweries approved status to true or false
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(path = "/admin/{breweryId}", method = RequestMethod.PUT)
     public Brewery update(@RequestBody Brewery brewery, @PathVariable int breweryId) {
