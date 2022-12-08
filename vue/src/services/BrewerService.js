@@ -6,12 +6,13 @@ const http = axios.create({
 
 export default {
 
-  getBreweries() {
-    return http.get('/brewery')
-  },
 
   getBrewery(breweryID) {
     return http.get(`/brewery/${breweryID}`)
   },
-  
+  getMyBreweries(brewerId){
+    return http.get(`/brewer/${brewerId}`,{headers:{Authorization:'Bearer ' + localStorage.getItem('token')}});
+  }
+
+
 }

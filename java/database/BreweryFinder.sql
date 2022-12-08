@@ -7,8 +7,9 @@ CREATE TABLE brewery (
     brewery_name varchar(64) NOT NULL,
     phone_number varchar(14) NOT NULL,
     address varchar(64) NOT NULL,
-    image_url text NULL,
-    description varchar(1500) NULL,
+	hours text NOT NULL,
+    image_url text NOT NULL,
+    description text NULL,
 	is_approved boolean DEFAULT false,
     owner int NULL,
 
@@ -90,24 +91,24 @@ INSERT INTO users (username,password_hash,role) VALUES ('user6','$2a$08$UkVvwpUL
 /***********************************************************************************************************
  Populating brewewry table with 8 breweries
 ***********************************************************************************************************/
-INSERT INTO public.brewery(brewery_name, phone_number, address, image_url, description,is_approved, owner) VALUES
-	('Second District Brewing', '(215) 575-5900', '1939 S. Bancroft Street Philadelphia, PA 19145', 'https://i.gyazo.com/7053061e17da04bd978ae77cf085fa9d.jpg',
+INSERT INTO public.brewery(brewery_name, phone_number, address, hours, image_url, description,is_approved, owner) VALUES
+	('Second District Brewing', '(215) 575-5900', '1939 S. Bancroft Street Philadelphia, PA 19145', 'M-F: 8-11 S-S: 8-2', 'https://i.gyazo.com/7053061e17da04bd978ae77cf085fa9d.jpg',
 	'Ben Potts has been brewing in the Philadelphia region for over 14 years, working with some of the areas most well known breweries. With a background focused heavily on experimentation and pushing the boundaries of what we know as ‘beer’, Ben has done it all - from working with exotic fruits and spices, barrel aging, mixed fermentation techniques, to some of the most unconventional brewing ingredients possible. With that in mind, Ben brings all of his experience to Second District, creating both off-the-wall flavors and classically inspired styles, along with everything in between.',true, 2),
-	('Crime and Punishment Brewing Company', '(215) 235-2739', '2711 W Girard Ave, Philadelphia, PA 19130', 'https://i.gyazo.com/fb468bf28e0dcda284e7c7e7adc3095c.jpg',
+	('Crime and Punishment Brewing Company', '(215) 235-2739', '2711 W Girard Ave, Philadelphia, PA 19130', 'M-F: 8-11 S-S: 8-2', 'https://i.gyazo.com/fb468bf28e0dcda284e7c7e7adc3095c.jpg',
 	'From ales and lagers, to saisons and IPAs, there’s something on tap for everyone. C+P aims to blend the once-great local brewing tradition with newer craft techniques and international inspirations. They have designed a rotating menu of distinctive brews and Russian-influenced dishes done their way. Crime + Punishment is proud to be part of a thriving community. We partner with local organizations to promote the rich culture of Brewerytown. Whether sponsoring the little league or hosting Philly arts events, C+P seeks creative ways to step outside our walls and participate in neighborhood life. It’s not just a place to eat and drink, it’s a place to get to know your neighbors. Great beer.  Great food. Great community. Crime + Punishment welcomes you.',true,2),
-	('Yards Brewing Company', '(215) 525-0715', '500 Spring Garden St Philadelphia, PA 19123', 'https://i.gyazo.com/8c336be5e2177a839bed109d8ba8a193.png',
+	('Yards Brewing Company', '(215) 525-0715', '500 Spring Garden St Philadelphia, PA 19123', 'M-F: 8-11 S-S: 8-2', 'https://i.gyazo.com/8c336be5e2177a839bed109d8ba8a193.png',
 	'Yards has been brewing Philly''s beer since 1994. We’ve grown from a garage-sized operation in Manayunk all the way up to our current location at 500 Spring Garden Street in Northern Liberties. And we couldn''t have done it without your support through the years. Our beers always have and always will be brewed, bottled, kegged, and canned for the hard working people of Philadelphia and beyond.',true, 2),
-	('Love City Brewing', '(215) 398-1900', '1023 Hamiltion Street Philadelphia, PA 19123', 'https://i.gyazo.com/b88a2a13dedf6a003f4ebf7f6c2bacad.png',
+	('Love City Brewing', '(215) 398-1900', '1023 Hamiltion Street Philadelphia, PA 19123', 'M-F: 8-11 S-S: 8-2', 'https://i.gyazo.com/b88a2a13dedf6a003f4ebf7f6c2bacad.png',
 	'We create unfailingly delicious beer that is the centerpiece of Philadelphia’s table. We do whatever it takes to ensure the quality of each beer we serve. At Love City, we take care of each other. We prioritize relationships with our customers, colleagues, and community. We grow at a pace that allows us to maintain these values and priorities. We work hard to demonstrate what a craft brewery should be – a responsible small business that makes outstanding beer while respecting the people that make it possible.',true,2),
-	('Weenie Hut General', '(215) 965-2305', '526 Market St, Philadelphia, PA 19106', 'https://i.gyazo.com/27a97b99ea7739d6436dcaca832d8a49.jpg', 'A silly lil’ brewery!',true,6),
-	('The Salty Spitoon', '(215) 763-1800', '2600 Benjamin Franklin Pkwy, Philadelphia, PA 19130', 'https://i.gyazo.com/f2cafbce2b4497d9d463df0fb6eb8a77.jpg',
+	('Weenie Hut General', '(215) 965-2305', '526 Market St, Philadelphia, PA 19106', 'M-F: 8-11 S-S: 8-2', 'https://i.gyazo.com/27a97b99ea7739d6436dcaca832d8a49.jpg', 'A silly lil’ brewery!',true,6),
+	('The Salty Spitoon', '(215) 763-1800', '2600 Benjamin Franklin Pkwy, Philadelphia, PA 19130', 'M-F: 8-11 S-S: 8-2', 'https://i.gyazo.com/f2cafbce2b4497d9d463df0fb6eb8a77.jpg',
 	'Ahoy, fair lass, it be the line to get into the Salty Spitoon — the roughest, toughest sailor club ever to be built under the seven seas. Only the baddest of the bad can get in.',true,6),
-	('Scorsese', '(215) 236-3300', '2027 Fairmount Ave, Philadelphia, PA 19130', 'https://i.gyazo.com/06338bb792245ca0d26af0f7dea44dc6.jpg',
+	('Scorsese', '(215) 236-3300', '2027 Fairmount Ave, Philadelphia, PA 19130', 'M-F: 8-11 S-S: 8-2', 'https://i.gyazo.com/06338bb792245ca0d26af0f7dea44dc6.jpg',
 	'We love craft beer! Our tap room is designed to be a comfortable place to hang out with family and friends. Come, play in our backyard! Please feel free to bring your own food, have some delivered, or come to enjoy one of our frequent food truck events.',true,6),
-	('Goodfellas', '(215) 922-2317', '1136 Arch St, Philadelphia, PA 19107', 'https://i.gyazo.com/d75fc55c47a9ea82c3b52bf2c3d2eea0.png',
+	('Goodfellas', '(215) 922-2317', '1136 Arch St, Philadelphia, PA 19107', 'M-F: 8-11 S-S: 8-2', 'https://i.gyazo.com/d75fc55c47a9ea82c3b52bf2c3d2eea0.png',
 	'We always called each other good fellas. Since the 80''s, two college buds Tony and Artie decided to brew some beer for their friends. Whether it was natural talent or the endless supply of suds, people liked what they tasted and wanted more. They didn''t know it at the time, but this was the beginning of what was to become Goodfellas.',true,6),
-	('Test #9 Owned by brewer #5 Unapproved', 'Test Phone', 'Test Address Test Address', 'https://www.tampabay.com/resizer//uwoglU_jzFjW3-JIF7HcjaOcK1Q=/900x506/smart/filters:format(webP)/cloudfront-us-east-1.images.arcpublishing.com/tbt/7OKZVBKPIZF4VEK77DUSVTVV7E.jpg', 'Test brewery that should not be approved.',false, 5),
-    ('Test #10 Owned by brewer #5 Unapproved', 'Test Phone', 'Test Address Test Address', 'https://imageio.forbes.com/specials-images/dam/imageserve/111577230/960x0.jpg', 'Test brewery that should not be approved.',false, 5);
+	('Test #9 Owned by brewer #5 Unapproved', 'Test Phone', 'Test Address Test Address', 'M-F: 8-11 S-S: 8-2', 'https://www.tampabay.com/resizer//uwoglU_jzFjW3-JIF7HcjaOcK1Q=/900x506/smart/filters:format(webP)/cloudfront-us-east-1.images.arcpublishing.com/tbt/7OKZVBKPIZF4VEK77DUSVTVV7E.jpg', 'Test brewery that should not be approved.',false, 5),
+    ('Test #10 Owned by brewer #5 Unapproved', 'Test Phone', 'Test Address Test Address', 'M-F: 8-11 S-S: 8-2', 'https://imageio.forbes.com/specials-images/dam/imageserve/111577230/960x0.jpg', 'Test brewery that should not be approved.',false, 5);
 
 /***********************************************************************************************************
  Populating beer

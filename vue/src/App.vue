@@ -208,6 +208,24 @@ main #cards article {
   z-index: 1;
 }
 
+input[type="radio"] {
+  display: none;
+}
+
+.radio-button {
+  background-color: rgba(0,0,255,0.5);
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+  box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+input:checked + label {
+  background-color: rgba(0,0,255,1);
+}
+
 /********************************************** Brewery Page **********************************************/
 #page-header {
   height: 400px;
