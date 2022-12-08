@@ -41,10 +41,10 @@
         </div>
         <div>
           <label >Choose a type of account: </label>
-          <label for="user"> user </label>
-          <input type="radio" value="user" v-model="user.role" id="user"/>
-          <label for="brewer"> brewer </label>
-          <input type="radio" value="brewer" v-model="user.role" id="brewer"/>
+          <input type="radio" value="user" v-model="user.role" id="user" name="role" />
+          <label for="user" class="radio-button"> user </label>
+          <input type="radio" value="brewer" v-model="user.role" id="brewer" name="role"/>
+          <label for="brewer" class="radio-button"> brewer </label>
         </div>
         <router-link :to="{ name: 'login' }">Have an account?</router-link>
         <button class="button" type="submit">
@@ -66,7 +66,7 @@ export default {
         username: "",
         password: "",
         confirmPassword: "",
-        role: "",
+        role: "user",
       },
       registrationErrors: false,
       registrationErrorMsg: "There were problems registering this user.",
