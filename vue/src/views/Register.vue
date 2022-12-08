@@ -40,12 +40,11 @@
           />
         </div>
         <div>
-          <label>Choose a type of account: </label>
-          <Select>
-            <option></option>
-            <option>Regular User Account</option>
-            <option>Brewery Owner</option>
-          </Select>
+          <label >Choose a type of account: </label>
+          <label for="user"> user </label>
+          <input type="radio" value="user" v-model="user.role" id="user"/>
+          <label for="brewer"> brewer </label>
+          <input type="radio" value="brewer" v-model="user.role" id="brewer"/>
         </div>
         <router-link :to="{ name: 'login' }">Have an account?</router-link>
         <button class="button" type="submit">
@@ -67,7 +66,7 @@ export default {
         username: "",
         password: "",
         confirmPassword: "",
-        role: "user",
+        role: "",
       },
       registrationErrors: false,
       registrationErrorMsg: "There were problems registering this user.",
