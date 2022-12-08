@@ -8,16 +8,19 @@ public class Brewery {
     private String address;
     private String description;
     private boolean isApproved;
+    private int owner;
 
     public Brewery(){
 
     }
 
-    public Brewery(String breweryName, String imageURL, String phoneNumber, String address) {
+    public Brewery(String breweryName, String imageURL, String phoneNumber, String address, boolean isApproved, int owner) {
         this.breweryName = breweryName;
         this.imageURL = imageURL;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.isApproved = isApproved;
+        this.owner = owner;
     }
 
     public String getDescription() {
@@ -71,6 +74,10 @@ public class Brewery {
     public boolean getIsApproved() {return isApproved;}
 
     public void setIsApproved(boolean approved) {isApproved = approved;}
+
+    public int getOwner() { return owner; }
+
+    public void setOwner(int owner) { this.owner = owner; }
 
     @Override
     public String toString() {

@@ -21,8 +21,8 @@ public class JdbcBreweryDao implements BreweryDao{
     @Override
     public List<Brewery> getAllBreweries() {
         List<Brewery> breweries = new ArrayList<>();
-        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description\n" +
-                "\tFROM public.brewery;";
+        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description\n, is_approved, owner" +
+                "\tFROM public.brewery WHERE is_approved = true;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql);
         while(result.next()){
             breweries.add(mapToBrewery(result));
@@ -75,6 +75,7 @@ public class JdbcBreweryDao implements BreweryDao{
             brewery.setPhoneNumber(results.getString("phone_number"));
             brewery.setDescription(results.getString("description"));
             brewery.setIsApproved(results.getBoolean("is_approved"));
+            brewery.setOwner(results.getInt("owner"));
             return brewery;
         }catch(Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
