@@ -34,9 +34,7 @@ export default {
     }
   },
   created() {
-    console.log("TEST")
     breweryService.getBreweries().then((response) => {
-      console.log("TEST2")
       this.breweries = response.data;
     });
   },
