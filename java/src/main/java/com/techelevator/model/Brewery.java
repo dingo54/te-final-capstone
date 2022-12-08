@@ -9,6 +9,7 @@ public class Brewery {
     private String description;
     private boolean isApproved;
     private int owner;
+    private String hours;
 
     public Brewery(){
 
@@ -21,6 +22,7 @@ public class Brewery {
         this.address = address;
         this.isApproved = isApproved;
         this.owner = owner;
+        this.hours = hours;
     }
 
     public String getDescription() {
@@ -78,6 +80,14 @@ public class Brewery {
     public int getOwner() { return owner; }
 
     public void setOwner(int owner) { this.owner = owner; }
+
+    public String getHours() {
+        return hours;
+    }
+
+    public void setHours(String hours) {
+        this.hours = hours;
+    }
 
     @Override
     public String toString() {

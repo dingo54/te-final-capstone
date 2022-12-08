@@ -24,7 +24,7 @@ public class JdbcBreweryDao implements BreweryDao{
     @Override
     public List<Brewery> getAllBreweries() {
         List<Brewery> breweries = new ArrayList<>();
-        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description\n, is_approved, owner" +
+        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description\n, is_approved, owner, hours" +
                 "\tFROM public.brewery WHERE is_approved = true;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql);
         while(result.next()){
@@ -36,7 +36,7 @@ public class JdbcBreweryDao implements BreweryDao{
     @Override
     public Brewery getBreweryById(int breweryId) {
         Brewery brewery = new Brewery();
-        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description, is_approved, owner " +
+        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description, is_approved, owner, hours " +
                 "FROM public.brewery WHERE brewery_id = ?;";
         SqlRowSet result= jdbcTemplate.queryForRowSet(sql, breweryId);
         while(result.next()){
@@ -52,10 +52,11 @@ public class JdbcBreweryDao implements BreweryDao{
         newBrewery.setImageURL(brewery.getImageURL());
         newBrewery.setBreweryName(brewery.getBreweryName());
         newBrewery.setAddress(brewery.getBreweryName());
+        newBrewery.setHours(brewery.getHours());
         String sql="INSERT INTO public.brewery(\n" +
-                "\tbrewery_name, phone_number, address, image_url, description)\n" +
-                "\tVALUES (?, ?, ?, ?) RETURNING brewery_id;";
-        int breweryId = jdbcTemplate.queryForObject(sql, int.class, newBrewery.getBreweryName(),newBrewery.getPhoneNumber(),newBrewery.getAddress(),newBrewery.getImageURL(), newBrewery.getDescription());
+                "\tbrewery_name, phone_number, address, image_url, description, hours)\n" +
+                "\tVALUES (?, ?, ?, ?, ?, ?) RETURNING brewery_id;";
+        int breweryId = jdbcTemplate.queryForObject(sql, int.class, newBrewery.getBreweryName(),newBrewery.getPhoneNumber(),newBrewery.getAddress(),newBrewery.getImageURL(), newBrewery.getDescription(), newBrewery.getHours());
         newBrewery.setBreweryId(breweryId);
         return newBrewery;
     }
@@ -91,6 +92,7 @@ public class JdbcBreweryDao implements BreweryDao{
             brewery.setDescription(results.getString("description"));
             brewery.setIsApproved(results.getBoolean("is_approved"));
             brewery.setOwner(results.getInt("owner"));
+            brewery.setHours(results.getString("hours"));
             return brewery;
         }catch(Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
@@ -99,7 +101,7 @@ public class JdbcBreweryDao implements BreweryDao{
     @Override
     public List <Brewery> getAllBreweriesByUserId(int userId) {
         List <Brewery> brewery = new ArrayList<>();
-        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description, is_approved, owner\n" +
+        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description, is_approved, owner, hours\n" +
                 "\tFROM public.brewery\n" +
                 "\tWHERE owner = ?;";
         SqlRowSet result= jdbcTemplate.queryForRowSet(sql, userId);
@@ -117,12 +119,13 @@ public class JdbcBreweryDao implements BreweryDao{
         String image = brewery.getImageURL();
         String description = brewery.getDescription();
         boolean defaultIsApproved = false;
+        String hours = brewery.getHours();
         String sql = "INSERT INTO public.brewery( " +
-                "brewery_name, phone_number, address, image_url, description, is_approved, owner) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING brewery_id;";
+                "brewery_name, phone_number, address, image_url, description, is_approved, owner, hours) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING brewery_id;";
 
         int newBreweryId = jdbcTemplate.queryForObject(sql, Integer.class, name, number, address,
-                    image, description, defaultIsApproved, ownerId);
+                    image, description, defaultIsApproved, ownerId, hours);
 
         return getBreweryById(newBreweryId);
     }
