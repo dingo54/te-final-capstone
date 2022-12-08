@@ -1,7 +1,7 @@
 <template>
   <div>
+      <p>TESTTTTTTTTTTTTTTTTTTTTTTTT</p>
     <section id="cards">
-      
       <article class="brewery-card" 
         v-for="brewery in breweries" 
         v-bind:key="brewery.breweryId"
@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import breweryService from "../services/BreweryService";
+import brewerService from "../services/BrewerService.js";
 export default {
-  name: "brewery-list",
+    name: "brewer-list",
   data() {
     return {
       breweries: [],
@@ -34,11 +34,13 @@ export default {
     }
   },
   created() {
-    console.log("TEST")
-    breweryService.getBreweries().then((response) => {
-      console.log("TEST2")
+    brewerService.getMyBreweries(this.$store.state.user.id).then((response) => {
       this.breweries = response.data;
     });
   },
 };
 </script>
+
+<style>
+
+</style>

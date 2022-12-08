@@ -6,7 +6,9 @@ import axios from 'axios'
 
 Vue.config.productionTip = false
 
+axios.defaults.withCredentials= true;
 axios.defaults.baseURL = process.env.VUE_APP_REMOTE_API;
+
 
 new Vue({
   router,

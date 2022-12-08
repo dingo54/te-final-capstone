@@ -14,7 +14,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@PreAuthorize("isAuthenticated()")
+
 @CrossOrigin
 public class BrewerController {
 
@@ -29,20 +29,19 @@ public class BrewerController {
 
     // *GET* ALL BREWERIES OWNED BY BREWER (Must have role BREWER)
     @PreAuthorize("hasRole('BREWER')")
-    @RequestMapping(path = "/brewer", method = RequestMethod.GET)
-    public List<Brewery> getBrewer(Principal principal){
-        int userId = userDao.findIdByUsername(principal.getName());
+    @RequestMapping(path = "/brewer/{brewerId}", method = RequestMethod.GET)
+    public List<Brewery> getBrewer(@PathVariable int brewerId){;
 
-        return breweryDao.getAllBreweriesByUserId(userId);
+        return breweryDao.getAllBreweriesByUserId(brewerId);
     }
-
+/*
     // *GET* A BREWERY (Must have role BREWER)
     @PreAuthorize("hasRole('BREWER')")
     @RequestMapping(path = "/brewer/{id}", method = RequestMethod.GET)
     public Brewery getBrewerBreweryById(@PathVariable int id) {
         return breweryDao.getBreweryById(id);
     }
-
+*/
     // *CREATE* A BREWERY (Must have role BREWER)
     @PreAuthorize("hasRole('BREWER')")
     @RequestMapping(path = "/brewer", method = RequestMethod.POST)
