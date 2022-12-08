@@ -8,7 +8,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -28,8 +27,7 @@ public class AdminController {
     //Admin can view list of all breweries
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(path = "/admin", method = RequestMethod.GET)
-    public List<Brewery> getBrewer(Principal principal){
-        int userId = userDao.findIdByUsername(principal.getName());
+    public List<Brewery> getBrewer(){
 
         return breweryDao.getAllBreweries();
     }
@@ -37,13 +35,12 @@ public class AdminController {
     //Admin can update existing breweries approved status to true
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(path = "/admin/{breweryId}", method = RequestMethod.PUT)
-    public Brewery update(@RequestBody Brewery brewery, @PathVariable int breweryId, Principal principal) {
-        Brewery updateBreweryStatus = breweryDao.updateBrewery(breweryId, brewery);
+    public Brewery update(@RequestBody Brewery brewery, @PathVariable int breweryId) {
+        Brewery updateBrewery = breweryDao.updateBreweryAdmin(breweryId, brewery);
         if(brewery.getIsApproved()){
-        //if (updateBrewery == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Brewery Not Found");
         }else {
-            return updateBreweryStatus;
+            return updateBrewery;
         }
     }
 
@@ -53,9 +50,5 @@ public class AdminController {
     @RequestMapping(path = "/admin/{breweryId}", method = RequestMethod.DELETE)
     public void delete(@PathVariable int breweryId) {
         breweryDao.delete(breweryId);
-//        if(!breweryDao.delete(breweryId)) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Brewery " + breweryId + " not found");
-//        }
     }
-
 }

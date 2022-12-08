@@ -70,6 +70,16 @@ public class JdbcBreweryDao implements BreweryDao{
         return getBreweryById(breweryId);
     }
 
+    @Override
+    public Brewery updateBreweryAdmin(int breweryId, Brewery brewery) {
+        String sql ="UPDATE public.brewery " +
+                "SET brewery_name=?, phone_number=?, address=?, image_url=?, description=?, is_approved=?, owner=?" +
+                "WHERE brewery_id =?;";
+        int numOfRowsUpdated = jdbcTemplate.update(sql, brewery.getBreweryName(),brewery.getPhoneNumber(),brewery.getAddress(),brewery.getImageURL(), brewery.getDescription(), brewery.getIsApproved(), brewery.getOwner(), breweryId);
+
+        return getBreweryById(breweryId);
+    }
+
     private Brewery mapToBrewery(SqlRowSet results){
         try {
             Brewery brewery = new Brewery();
@@ -118,15 +128,11 @@ public class JdbcBreweryDao implements BreweryDao{
     }
 
     @Override
-//    public boolean delete(int breweryId){return false;}
-    public void delete(int breweryId) {
-        Brewery target = null;
-        for(Brewery brewery : breweries){
-            if(brewery.getBreweryId() == breweryId) {
-                target = brewery;
-            }
-        }
-        // when using foreach we must remove the item after iterating to avoid a ConcurrentModificationException
-        breweries.remove(target);
+    public boolean delete(int breweryId) {
+
+        String sql = "DELETE FROM public.brewery WHERE brewery_id = ?;";
+        int numOfRowsDeleted = jdbcTemplate.update(sql, breweryId);
+        return numOfRowsDeleted == 1;
     }
+
 }

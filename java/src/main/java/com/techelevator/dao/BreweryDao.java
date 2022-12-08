@@ -19,7 +19,7 @@ public interface BreweryDao {
 
     Brewery create(Brewery brewery, int ownerId);
 
-//    boolean delete(int breweryId);
-    void delete(int breweryId);
+    Brewery updateBreweryAdmin(int breweryId, Brewery brewery);
 
+    boolean delete(int breweryId);
 }
