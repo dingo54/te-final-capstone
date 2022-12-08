@@ -18,7 +18,7 @@ import java.util.List;
 @CrossOrigin
 public class BrewerController {
 
-    //create userDao
+    //create userDao and breweryDao
     private JdbcBreweryDao breweryDao;
     private JdbcUserDao userDao;
 

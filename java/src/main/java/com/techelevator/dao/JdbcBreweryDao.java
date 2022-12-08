@@ -12,7 +12,10 @@ import java.util.List;
 
 @Component
 public class JdbcBreweryDao implements BreweryDao{
+
+    private static List<Brewery> breweries = new ArrayList<>();
     private JdbcTemplate jdbcTemplate;
+    private BreweryDao breweryDao;
 
     public JdbcBreweryDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -114,4 +117,16 @@ public class JdbcBreweryDao implements BreweryDao{
         return getBreweryById(newBreweryId);
     }
 
+    @Override
+//    public boolean delete(int breweryId){return false;}
+    public void delete(int breweryId) {
+        Brewery target = null;
+        for(Brewery brewery : breweries){
+            if(brewery.getBreweryId() == breweryId) {
+                target = brewery;
+            }
+        }
+        // when using foreach we must remove the item after iterating to avoid a ConcurrentModificationException
+        breweries.remove(target);
+    }
 }
