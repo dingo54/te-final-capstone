@@ -9,7 +9,5 @@ public interface BeerDao {
     List<Beer> getAllBeersByBreweryId(int breweryId);
     Beer addBeer(Beer beer);
     boolean updateBeer(int beerId,Beer beer);
-
-
-
+    boolean delete(int beerId);
 }

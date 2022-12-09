@@ -6,6 +6,7 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import Brewery from '../views/Brewery.vue'
+import BeerForm from '../views/BeerForm.vue'
 
 Vue.use(Router)
 
@@ -61,6 +62,14 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
+    },
+    {
+    path:"/beerForm",
+    name:'BeerForm',
+    component: BeerForm,
+    meta:{
+      requiresAuth: true
+    }
     }
   ]
 })
