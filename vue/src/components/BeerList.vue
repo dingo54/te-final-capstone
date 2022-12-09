@@ -2,6 +2,7 @@
   <div id="page-main">
     <h2>Our Beers</h2>
     <article v-for="beer in beers" v-bind:key="beer.beerId" class="beer">
+      <p>{{beer.beerId}}</p>
       <div class="beer-info">
         <h3>{{ beer.name }}</h3>
         <h4>{{ beer.style }}</h4>
@@ -13,6 +14,7 @@
         <img v-bind:src="beer.image" v-if="beer.image !== null" />
         <img src="../assets/mug.png" v-if="beer.image === null" />
       </div>
+      <button v-on:click="deleteBeer(beer.beerId)">Delete Beer</button>
     </article>
   </div>
 </template>
@@ -21,15 +23,28 @@
 import beerService from "../services/BeerService";
 export default {
   name: "beer-list",
+  methods:{
+    deleteBeer(beerId){
+      beerService.deleteBeer(beerId).then(response=>{
+        if(response.status===200||response.status===201){
+      this.getBeers();
+        }
+      });
+      
+    },
+    getBeers(){
+      beerService.getBeerForBrewery(this.$route.params.id).then((response) => {
+      this.beers = response.data;
+    });
+    }
+  },
   data() {
     return {
       beers: [],
     };
   },
   created() {
-    beerService.getBeerForBrewery(this.$route.params.id).then((response) => {
-      this.beers = response.data;
-    });
+    this.getBeers();
   },
 };
 </script>

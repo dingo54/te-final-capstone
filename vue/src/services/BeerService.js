@@ -11,6 +11,8 @@ export default {
   },
   addBeer(beer){
     return http.post(`/beer`, beer)
+  },
+  deleteBeer(beerId){
+    return http.delete(`/beer/${beerId}`)
   }
-
 }
