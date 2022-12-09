@@ -20,6 +20,7 @@ export default new Vuex.Store({
   state: {
     token: currentToken || '',
     user: currentUser || {},
+    showForm:false,
     brewery: {
       breweryId: 0,
       breweryName: '',
@@ -27,6 +28,8 @@ export default new Vuex.Store({
       phoneNumber: '',
       address: '',
       description: '',
+      isApproved:false,
+      owner:'',
       hours:""
     },
     beers: []

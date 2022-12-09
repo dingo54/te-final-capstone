@@ -1,6 +1,6 @@
 <template>
   <div id="register" class="text-center">
-    <section class="login">
+    <section class="form">
       <form class="form-register" @submit.prevent="register">
         <h1>Create Account</h1>
         <div class="alert alert-danger" role="alert" v-if="registrationErrors">
