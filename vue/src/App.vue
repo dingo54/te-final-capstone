@@ -155,7 +155,7 @@ main #cards article {
   padding: 10px 20px;
 }
 /********************************************** Login/Register **********************************************/
-.login {
+.form {
   max-width: 400px;
   margin: 0 auto;
   padding: 25px;
@@ -164,13 +164,15 @@ main #cards article {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 .form-signin,
-.form-register {
+.form-register,
+.form-beer {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
 }
-.login h1 {
+.login h1, 
+.form h1 {
   text-align: center;
   font-size: 40px;
   font-family: var(--page-header-font);
@@ -197,6 +199,8 @@ main #cards article {
   cursor: pointer;
   color: white;
   background-color: var(--blue);
+  text-decoration: none;
+  margin: 10px;
 }
 .blue {
   color: blue;

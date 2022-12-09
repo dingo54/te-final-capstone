@@ -1,6 +1,6 @@
 <template>
   <div id="login" class="text-center">
-    <section class="login">
+    <section class="form">
       <form class="form-signin" @submit.prevent="login">
         <h1>Please Sign In</h1>
         <div class="alert alert-danger" role="alert" v-if="invalidCredentials">

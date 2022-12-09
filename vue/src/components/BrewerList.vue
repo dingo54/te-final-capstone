@@ -1,6 +1,5 @@
 <template>
   <div>
-      <p>TESTTTTTTTTTTTTTTTTTTTTTTTT</p>
     <section id="cards">
       <article class="brewery-card" 
         v-for="brewery in breweries" 
@@ -11,7 +10,7 @@
           <h2>{{ brewery.breweryName }}</h2>
           <p><i class="fa-solid fa-location-dot blue"></i> {{ brewery.address }}</p>
           <p style="flex-grow:1;"><i class="fa-solid fa-phone blue"></i> {{ brewery.phoneNumber }}</p>
-          <p><i class="fa fa-calendar" aria-hidden="true"></i>{{brewery.hours}}</p>
+          <p><i class="fa fa-solid fa-clock blue" aria-hidden="true"></i>{{brewery.hours}}</p>
           <p><i class="fa-solid fa-star"></i>Avg Rating and # Reviews here</p>
         </div>
         <img v-bind:src="brewery.imageURL" class="brewery-image" />
