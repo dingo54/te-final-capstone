@@ -32,12 +32,22 @@ public class BeerController {
         return beerDao.addBeer(beer);
     }
 
+<<<<<<< HEAD
     @RequestMapping(path = "beer/{beerID}",method = RequestMethod.PUT)
+=======
+    @RequestMapping(path = "/beer/{beerID}",method = RequestMethod.PUT)
+>>>>>>> dbd978d7867ee9e6faa90ae4f53e5ecf29d1a7db
     public void updateBeer(@PathVariable int beerID, @RequestBody Beer beer){
         if (beerID != beer.getBeerId()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "beer Id not found");
         }
         beerDao.updateBeer(beerID,beer);
+    }
+
+    //Delete a beer
+    @RequestMapping(path = "/beer/{breweryId}", method = RequestMethod.DELETE)
+    public void deleteBeer(@PathVariable int breweryId) {
+        beerDao.delete(breweryId);
     }
 
 }

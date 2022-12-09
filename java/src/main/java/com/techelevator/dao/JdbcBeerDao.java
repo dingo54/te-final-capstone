@@ -82,6 +82,14 @@ public class JdbcBeerDao implements BeerDao {
             return rowsUpdated==1;
 
     }
+
+    @Override
+    public boolean delete(int beerId) {
+            String sql = "DELETE FROM public.beer WHERE beer_id = ?;";
+            int numOfRowsDeleted = jdbcTemplate.update(sql, beerId);
+            return numOfRowsDeleted == 1;
+        }
+
     public Beer mapRowToBeer(SqlRowSet rowSet){
         try {
             Beer beer = new Beer();
