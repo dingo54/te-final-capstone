@@ -49,7 +49,7 @@ public class JdbcBeerDao implements BeerDao {
     public Beer addBeer(Beer beer) {
         Beer newBeer = new Beer();
         newBeer.setBeerId(beer.getBeerId());
-        newBeer.setBreweryId(beer.getBeerId());
+        newBeer.setBreweryId(beer.getBreweryId());
         newBeer.setStyle(beer.getStyle());
         newBeer.setName(beer.getName());
         newBeer.setPrice(beer.getPrice());
@@ -59,7 +59,7 @@ public class JdbcBeerDao implements BeerDao {
         String sql="INSERT INTO public.beer(\n" +
                 "\tbrewery_id, name, style, price, abv, image, description)\n" +
                 "\tVALUES (?, ?, ?, ?, ?, ?, ?) RETURNING beer_id;";
-        int beer_id = jdbcTemplate.queryForObject(sql,int.class, newBeer.getBreweryId(),newBeer.getName(),newBeer.getStyle(),newBeer.getPrice(),newBeer.getAbv(),newBeer.getImage(),newBeer.getDescription());
+        int beer_id = jdbcTemplate.queryForObject(sql,int.class,newBeer.getBreweryId(),newBeer.getName(),newBeer.getStyle(),newBeer.getPrice(),newBeer.getAbv(),newBeer.getImage(),newBeer.getDescription());
         newBeer.setBeerId(beer_id);
         return newBeer;
     }

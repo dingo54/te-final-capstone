@@ -8,6 +8,9 @@ export default {
 
   getBeerForBrewery(breweryID) {
     return http.get(`/beer/${breweryID}`)
+  },
+  addBeer(beer){
+    return http.post(`/beer`, beer)
   }
 
 }
