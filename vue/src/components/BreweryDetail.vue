@@ -15,7 +15,6 @@
       <h2>Our History</h2>
       <p>{{ brewery.description }}</p>
     </div>
-    <router-link v-show="this.$store.state.user.id===this.$store.state.brewery.owner" class="button" to="/beerForm">Add a beer</router-link>
 
   </div>
 </template>

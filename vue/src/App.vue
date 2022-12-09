@@ -266,13 +266,19 @@ input:checked + label {
   flex-grow: 1;
 }
 /************************* Beer List ********************************************/
+.beerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .beer {
   border-bottom: 5px solid var(--blue);
+}
+.beer article {
   padding: 5px 0;
    display: flex;
   justify-content: space-between;
   align-items: center;
-
 }
 .beer:last-child {
   border: none;
@@ -288,6 +294,11 @@ input:checked + label {
   width: 200px;
   height: auto;
 }
+.brewer-btns {
+  display: flex;
+  justify-content: space-between;
+}
+
 
 /************************* Device Breakpoints (screen size) ********************************************/
 @media screen and (max-width: 900px) {
