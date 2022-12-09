@@ -40,6 +40,7 @@ public class BeerController {
         beerDao.updateBeer(beerID,beer);
     }
 
+    //Delete a beer
     @RequestMapping(path = "/beer/{breweryId}", method = RequestMethod.DELETE)
     public void deleteBeer(@PathVariable int breweryId) {
         beerDao.delete(breweryId);
