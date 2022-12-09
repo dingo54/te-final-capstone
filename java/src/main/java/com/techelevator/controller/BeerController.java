@@ -27,12 +27,12 @@ public class BeerController {
     public List<Beer> getAllBeersByBreweryId(@PathVariable int breweryId){
         return beerDao.getAllBeersByBreweryId(breweryId);
     }
-    @RequestMapping(path = "beer",method = RequestMethod.POST)
+    @RequestMapping(path = "/beer",method = RequestMethod.POST)
     public Beer addBeer(@RequestBody Beer beer){
         return beerDao.addBeer(beer);
     }
 
-    @RequestMapping(path = "beer/{beerID}",method = RequestMethod.PUT)
+    @RequestMapping(path = "/beer/{beerID}",method = RequestMethod.PUT)
     public void updateBeer(@PathVariable int beerID, @RequestBody Beer beer){
         if (beerID != beer.getBeerId()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "beer Id not found");
