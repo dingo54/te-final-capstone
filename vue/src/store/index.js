@@ -26,7 +26,8 @@ export default new Vuex.Store({
       imageURL: '',
       phoneNumber: '',
       address: '',
-      description: ''
+      description: '',
+      hours:""
     },
     beers: []
   },
