@@ -81,23 +81,6 @@ public class JdbcBreweryDao implements BreweryDao{
         return getBreweryById(breweryId);
     }
 
-    private Brewery mapToBrewery(SqlRowSet results){
-        try {
-            Brewery brewery = new Brewery();
-            brewery.setBreweryId(results.getInt("brewery_id"));
-            brewery.setAddress(results.getString("address"));
-            brewery.setBreweryName(results.getString("brewery_name"));
-            brewery.setImageURL(results.getString("image_url"));
-            brewery.setPhoneNumber(results.getString("phone_number"));
-            brewery.setDescription(results.getString("description"));
-            brewery.setIsApproved(results.getBoolean("is_approved"));
-            brewery.setOwner(results.getInt("owner"));
-            brewery.setHours(results.getString("hours"));
-            return brewery;
-        }catch(Exception e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-    }
     @Override
     public List <Brewery> getAllBreweriesByUserId(int userId) {
         List <Brewery> brewery = new ArrayList<>();
@@ -136,6 +119,24 @@ public class JdbcBreweryDao implements BreweryDao{
         String sql = "DELETE FROM public.brewery WHERE brewery_id = ?;";
         int numOfRowsDeleted = jdbcTemplate.update(sql, breweryId);
         return numOfRowsDeleted == 1;
+    }
+
+    private Brewery mapToBrewery(SqlRowSet results){
+        try {
+            Brewery brewery = new Brewery();
+            brewery.setBreweryId(results.getInt("brewery_id"));
+            brewery.setAddress(results.getString("address"));
+            brewery.setBreweryName(results.getString("brewery_name"));
+            brewery.setImageURL(results.getString("image_url"));
+            brewery.setPhoneNumber(results.getString("phone_number"));
+            brewery.setDescription(results.getString("description"));
+            brewery.setIsApproved(results.getBoolean("is_approved"));
+            brewery.setOwner(results.getInt("owner"));
+            brewery.setHours(results.getString("hours"));
+            return brewery;
+        }catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

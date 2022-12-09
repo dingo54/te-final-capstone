@@ -31,12 +31,18 @@ public class BeerController {
     public Beer addBeer(@RequestBody Beer beer){
         return beerDao.addBeer(beer);
     }
+
     @RequestMapping(path = "beer/{beerID}",method = RequestMethod.PUT)
     public void updateBeer(@PathVariable int beerID, @RequestBody Beer beer){
         if (beerID != beer.getBeerId()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "beer Id not found");
         }
         beerDao.updateBeer(beerID,beer);
+    }
+
+    @RequestMapping(path = "/beer/{breweryId}", method = RequestMethod.DELETE)
+    public void deleteBeer(@PathVariable int breweryId) {
+        beerDao.delete(breweryId);
     }
 
 }
