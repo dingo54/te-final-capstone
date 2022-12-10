@@ -1,8 +1,11 @@
 <template>
   <div id="page-main">
+    <section class="beerHeader">
     <h2>Our Beers</h2>
-    <article v-for="beer in beers" v-bind:key="beer.beerId" class="beer">
-      <p>{{beer.beerId}}</p>
+    <router-link to="/beerForm" v-show="brewerStatus===true" class="button">Add a beer</router-link>
+    </section>
+    <div v-for="beer in beers" v-bind:key="beer.beerId" class="beer">
+      <article>
       <div class="beer-info">
         <h3>{{ beer.name }}</h3>
         <h4>{{ beer.style }}</h4>
@@ -14,8 +17,13 @@
         <img v-bind:src="beer.image" v-if="beer.image !== null" />
         <img src="../assets/mug.png" v-if="beer.image === null" />
       </div>
-      <button v-on:click="deleteBeer(beer.beerId)">Delete Beer</button>
     </article>
+    <div class="brewer-btns" v-show="brewerStatus===true">
+      <button class="button">Update Beer</button>
+      <button v-on:click="deleteBeer(beer.beerId)" class="button">Delete Beer</button>
+    </div>
+    </div>
+    
   </div>
 </template>
 
@@ -35,12 +43,23 @@ export default {
     getBeers(){
       beerService.getBeerForBrewery(this.$route.params.id).then((response) => {
       this.beers = response.data;
+      this.brewerStatus = this.isBrewer()
     });
+    },
+    isBrewer() {
+      if(this.$store.state.user.id===this.$store.state.brewery.owner){
+        this.brewerStatus = "Brewer"
+        return true;
+      } else {
+        this.brewerStatus = "Not a Brewer"
+        return false;
+      }
     }
   },
   data() {
     return {
       beers: [],
+      brewerStatus: false
     };
   },
   created() {
