@@ -15,10 +15,14 @@ public class JdbcReviewDao implements ReviewDao {
 
     private JdbcTemplate jdbcTemplate;
 
+    public JdbcReviewDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     @Override
     public List<Review> getListOfReviews() {
         List<Review> reviews = new ArrayList<>();
-        String sql = "SELECT review_id, beer_id, user_id, rating, review FROM public.beer_reviews;";
+        String sql = "SELECT review_id, beer_id, user_id, brewery_id, rating, review FROM public.beer_reviews;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql);
         while (result.next()){
             reviews.add(mapRowToReview(result));
@@ -28,7 +32,14 @@ public class JdbcReviewDao implements ReviewDao {
 
     @Override
     public List<Review> getReviewsByBeerId(int beerId) {
-        return null;
+        List<Review> reviews = new ArrayList<>();
+        String sql = "SELECT review_id, beer_id, user_id, brewery_id, rating, review FROM public.beer_reviews" +
+                "WHERE beer_id=?;";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql,beerId);
+        while (result.next()){
+            reviews.add(mapRowToReview(result));
+        }
+        return reviews;
     }
 
     @Override
@@ -52,6 +63,7 @@ public class JdbcReviewDao implements ReviewDao {
             review.setReviewId(rowSet.getInt("review_id"));
             review.setBeerId(rowSet.getInt("beer_id"));
             review.setUserId(rowSet.getInt("user_id"));
+            review.setBreweryId(rowSet.getInt("brewery_id"));
             review.setRating(rowSet.getInt("rating"));
             review.setReview(rowSet.getString("review"));
             return review;
