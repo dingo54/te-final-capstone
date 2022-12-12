@@ -32,7 +32,17 @@ export default new Vuex.Store({
       owner:'',
       hours:""
     },
-    beers: []
+    beers: [],
+    beer: {
+      beerId: 0,
+      breweryId: 0,
+      name: '',
+      style: '',
+      price: 0,
+      abv: 0,
+      image: '',
+      description: ''
+    }
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -56,6 +66,9 @@ export default new Vuex.Store({
     },
     SET_CURRENT_BEERS(state, data) {
       state.beers = data;
+    },
+    SET_CURRENT_BEER(state, data) {
+      state.beer = data;
     }
   }
 })

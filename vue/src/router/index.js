@@ -7,6 +7,8 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import Brewery from '../views/Brewery.vue'
 import BeerForm from '../views/BeerForm.vue'
+import UpdateBeerForm from '../views/UpdateBeerForm.vue'
+import Beer from '../views/Beer.vue'
 
 Vue.use(Router)
 
@@ -64,12 +66,28 @@ const router = new Router({
       }
     },
     {
-    path:"/beerForm",
-    name:'BeerForm',
-    component: BeerForm,
-    meta:{
-      requiresAuth: true
-    }
+      path: "/beerForm",
+      name: 'BeerForm',
+      component: BeerForm,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/updateBeerForm",
+      name: "updateBeerForm",
+      component: UpdateBeerForm,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/beer/:id",
+      name: 'Beer',
+      component: Beer,
+      meta: {
+        requiresAuth: false
+      }
     }
   ]
 })

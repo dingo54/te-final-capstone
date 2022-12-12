@@ -7,12 +7,18 @@ const http = axios.create({
 export default {
 
   getBeerForBrewery(breweryID) {
-    return http.get(`/beer/${breweryID}`)
+    return http.get(`/${breweryID}/beer`)
+  },
+  getBeerDetail(beerId) {
+    return http.get(`/beer/${beerId}`)
   },
   addBeer(beer){
     return http.post(`/beer`, beer)
   },
   deleteBeer(beerId){
     return http.delete(`/beer/${beerId}`)
+  },
+  updateBeer(beerId, beer){
+    return http.put(`/beer/${beerId}`, beer)
   }
 }
