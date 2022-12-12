@@ -9,6 +9,7 @@ public interface ReviewDao {
     List<Review> getListOfReviews();
     List<Review> getReviewsByBeerId(int beerId);
     List<Review> getReviewsByBreweryId(int breweryId);
+    Review getReviewById(int reviewId);
     Review addReview(Review review);
     boolean deleteReview(int reviewId);
 

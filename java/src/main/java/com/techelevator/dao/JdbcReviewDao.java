@@ -22,7 +22,8 @@ public class JdbcReviewDao implements ReviewDao {
     @Override
     public List<Review> getListOfReviews() {
         List<Review> reviews = new ArrayList<>();
-        String sql = "SELECT review_id, beer_id, user_id, brewery_id, rating, review FROM public.beer_reviews;";
+        String sql = "SELECT review_id, beer_id, username, users.user_id, brewery_id, rating, review " +
+                "FROM public.beer_reviews JOIN users ON users.user_id = beer_reviews.user_id;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql);
         while (result.next()){
             reviews.add(mapRowToReview(result));
@@ -33,7 +34,8 @@ public class JdbcReviewDao implements ReviewDao {
     @Override
     public List<Review> getReviewsByBeerId(int beerId) {
         List<Review> reviews = new ArrayList<>();
-        String sql = "SELECT review_id, beer_id, user_id, brewery_id, rating, review FROM public.beer_reviews" +
+        String sql = "SELECT review_id, beer_id, username, users.user_id, brewery_id, rating, review " +
+                "FROM public.beer_reviews JOIN users ON users.user_id = beer_reviews.user_id " +
                 "WHERE beer_id=?;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql,beerId);
         while (result.next()){
@@ -44,17 +46,51 @@ public class JdbcReviewDao implements ReviewDao {
 
     @Override
     public List<Review> getReviewsByBreweryId(int breweryId) {
-        return null;
+        List<Review> reviews = new ArrayList<>();
+        String sql = "SELECT review_id, beer_id, username, users.user_id, brewery_id, rating, review " +
+                "FROM public.beer_reviews JOIN users ON users.user_id = beer_reviews.user_id " +
+                "WHERE brewery_id=?;";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql,breweryId);
+        while (result.next()){
+            reviews.add(mapRowToReview(result));
+        }
+        return reviews;
+    }
+
+    @Override
+    public Review getReviewById(int reviewId) {
+        Review review = new Review();
+        String sql = "SELECT review_id, beer_id, username, users.user_id, brewery_id, rating, review " +
+                "FROM public.beer_reviews JOIN users ON users.user_id = beer_reviews.user_id " +
+                "WHERE review_id=?;";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql,reviewId);
+        if (result.next()){
+            review = mapRowToReview(result);
+        }
+        return review;
     }
 
     @Override
     public Review addReview(Review review) {
-        return null;
+        Review newReview = new Review();
+        newReview.setBeerId(review.getBeerId());
+        newReview.setUserId(review.getUserId());
+        newReview.setBreweryId(review.getBreweryId());
+        newReview.setRating(review.getRating());
+        newReview.setReview(review.getReview());
+        String sql = "INSERT INTO public.beer_reviews(beer_id, user_id, brewery_id, rating, review) " +
+                "VALUES (?, ?, ?, ?, ?) RETURNING review_id;";
+        int reviewId = jdbcTemplate.queryForObject(sql,int.class,newReview.getBeerId(),newReview.getUserId(),
+                newReview.getBreweryId(),newReview.getRating(),newReview.getReview());
+        newReview.setReviewId(reviewId);
+        return newReview;
     }
 
     @Override
     public boolean deleteReview(int reviewId) {
-        return false;
+        String sql = "DELETE FROM public.beer_reviews WHERE review_id=?;";
+        int numOfRowsDeleted = jdbcTemplate.update(sql,reviewId);
+        return numOfRowsDeleted == 1;
     }
 
     public Review mapRowToReview(SqlRowSet rowSet){
@@ -62,6 +98,7 @@ public class JdbcReviewDao implements ReviewDao {
             Review review = new Review();
             review.setReviewId(rowSet.getInt("review_id"));
             review.setBeerId(rowSet.getInt("beer_id"));
+            review.setUsername(rowSet.getString("username"));
             review.setUserId(rowSet.getInt("user_id"));
             review.setBreweryId(rowSet.getInt("brewery_id"));
             review.setRating(rowSet.getInt("rating"));

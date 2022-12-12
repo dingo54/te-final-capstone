@@ -4,6 +4,7 @@ public class Review {
 
     private int reviewId;
     private int beerId;
+    private String username;
     private int userId;
     private int breweryId;
     private int rating;
@@ -11,9 +12,10 @@ public class Review {
 
     public Review(){}
 
-    public Review(int reviewId, int beerId, int userId, int breweryId, int rating, String review) {
+    public Review(int reviewId, int beerId, String username, int userId, int breweryId, int rating, String review) {
         this.reviewId = reviewId;
         this.beerId = beerId;
+        this.username = username;
         this.userId = userId;
         this.breweryId = breweryId;
         this.rating = rating;
@@ -34,6 +36,14 @@ public class Review {
 
     public void setBeerId(int beerId) {
         this.beerId = beerId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getUserId() {
