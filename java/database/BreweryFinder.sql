@@ -12,6 +12,7 @@ CREATE TABLE brewery (
     description text NULL,
 	is_approved boolean DEFAULT false,
     owner int NULL,
+	
 
     CONSTRAINT pk_brewery PRIMARY KEY (brewery_id)
 );
@@ -31,6 +32,7 @@ CREATE TABLE brewery_reviews (
     rating int NOT NULL,
     review varchar(1000) NULL,
     response varchar(600) NULL,
+	
 
     CONSTRAINT pk_brewery_review PRIMARY KEY (review_id),
     CONSTRAINT fk_brewery_review_brewery_id FOREIGN KEY (brewery_id) REFERENCES brewery (brewery_id),
@@ -67,16 +69,20 @@ CREATE TABLE beer (
     CONSTRAINT pk_beer PRIMARY KEY (beer_id)
 );
 
-CREATE TABLE beer_reviews (
+CREATE TABLE beer_reviews (  
     review_id serial NOT NULL,
     beer_id int NOT NULL,
     user_id int NOT NULL,
+	brewery_id int NOT NULL,
     rating int NOT NULL,
     review varchar(600) NULL,
+	
+	
 
     CONSTRAINT pk_beer_review PRIMARY KEY (review_id),
     CONSTRAINT fk_beer_review_beer_id FOREIGN KEY (beer_id) REFERENCES beer (beer_id),
-    CONSTRAINT fk_beer_review_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
+    CONSTRAINT fk_beer_review_user_id FOREIGN KEY (user_id) REFERENCES users (user_id),
+	CONSTRAINT fk_beer_review_brewery_id FOREIGN KEY (brewery_id) REFERENCES brewery (brewery_id)
 );
 
 
