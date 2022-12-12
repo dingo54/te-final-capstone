@@ -4,6 +4,7 @@ import com.techelevator.dao.BeerDao;
 import com.techelevator.model.Beer;
 import org.hibernate.validator.constraints.pl.REGON;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,13 +24,18 @@ public class BeerController {
         return beerDao.getListOfBeers();
     }
 
-    @RequestMapping(path = "/beer/{breweryId}", method = RequestMethod.GET)
+    @RequestMapping(path = "{breweryId}/beer", method = RequestMethod.GET)
     public List<Beer> getAllBeersByBreweryId(@PathVariable int breweryId){
         return beerDao.getAllBeersByBreweryId(breweryId);
     }
     @RequestMapping(path = "/beer",method = RequestMethod.POST)
     public Beer addBeer(@RequestBody Beer beer){
         return beerDao.addBeer(beer);
+    }
+
+    @RequestMapping(path = "/beer/{beerId}",method = RequestMethod.GET)
+    public Beer getBeerById(@PathVariable int beerId) {
+        return beerDao.getBeerById(beerId);
     }
 
 

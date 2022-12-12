@@ -7,19 +7,19 @@
     <div v-for="beer in beers" v-bind:key="beer.beerId" class="beer">
       <article>
       <div class="beer-info">
-        <h3>{{ beer.name }}</h3>
+        <h3 v-on:click="viewBeerDetail(beer.beerId)" v-bind:beer=beer >{{ beer.name }}</h3>
         <h4>{{ beer.style }}</h4>
         <h4>ABV: {{ beer.abv }}</h4>
         <h4>${{ beer.price }}</h4>
         <p>{{ beer.description }}</p>
       </div>
       <div class="beer-image-container">
-        <img v-bind:src="beer.image" v-if="beer.image !== null" />
-        <img src="../assets/mug.png" v-if="beer.image === null" />
+        <img v-bind:src="beer.image" v-if="beer.image !== null" v-on:click="viewBeerDetail(beer.beerId)" />
+        <img src="../assets/mug.png" v-if="beer.image === null" v-on:click="viewBeerDetail(beer.beerId)" />
       </div>
     </article>
     <div class="brewer-btns" v-show="brewerStatus===true">
-      <button class="button">Update Beer</button>
+      <button v-on:click="updateBeer(beer)" class="button">Update Beer</button>
       <button v-on:click="deleteBeer(beer.beerId)" class="button">Delete Beer</button>
     </div>
     </div>
@@ -37,8 +37,11 @@ export default {
         if(response.status===200||response.status===201){
       this.getBeers();
         }
-      });
-      
+      }); 
+    },
+    updateBeer(beer){
+      this.$store.state.beer = beer
+      this.$router.push('/updateBeerForm')
     },
     getBeers(){
       beerService.getBeerForBrewery(this.$route.params.id).then((response) => {
@@ -54,6 +57,9 @@ export default {
         this.brewerStatus = "Not a Brewer"
         return false;
       }
+    },
+    viewBeerDetail(beerId) {
+      this.$router.push(`/beer/${beerId}`)
     }
   },
   data() {

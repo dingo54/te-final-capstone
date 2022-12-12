@@ -46,6 +46,18 @@ public class JdbcBeerDao implements BeerDao {
     }
 
     @Override
+    public Beer getBeerById(int beerId) {
+        Beer beer = new Beer();
+        String sql = "SELECT beer_id, brewery_id, name, style, price, abv, image, description FROM public.beer WHERE beer_id=?;";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, beerId);
+        if (result.next()){
+            beer = mapRowToBeer(result);
+        }
+        return beer;
+    }
+
+
+    @Override
     public Beer addBeer(Beer beer) {
         Beer newBeer = new Beer();
         newBeer.setBeerId(beer.getBeerId());
@@ -68,7 +80,7 @@ public class JdbcBeerDao implements BeerDao {
     public boolean updateBeer(int beerId, Beer beer) {
             Beer newBeer = new Beer();
             newBeer.setBeerId(beer.getBeerId());
-            newBeer.setBreweryId(beer.getBeerId());
+            newBeer.setBreweryId(beer.getBreweryId());
             newBeer.setStyle(beer.getStyle());
             newBeer.setName(beer.getName());
             newBeer.setPrice(beer.getPrice());
