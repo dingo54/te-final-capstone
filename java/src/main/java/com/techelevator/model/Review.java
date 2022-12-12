@@ -5,15 +5,17 @@ public class Review {
     private int reviewId;
     private int beerId;
     private int userId;
+    private int breweryId;
     private int rating;
     private String review;
 
     public Review(){}
 
-    public Review(int reviewId, int beerId, int userId, int rating, String review) {
+    public Review(int reviewId, int beerId, int userId, int breweryId, int rating, String review) {
         this.reviewId = reviewId;
         this.beerId = beerId;
         this.userId = userId;
+        this.breweryId = breweryId;
         this.rating = rating;
         this.review = review;
     }
@@ -40,6 +42,14 @@ public class Review {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getBreweryId() {
+        return breweryId;
+    }
+
+    public void setBreweryId(int breweryId) {
+        this.breweryId = breweryId;
     }
 
     public int getRating() {
