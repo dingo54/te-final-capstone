@@ -10,14 +10,14 @@ public class Brewery {
     private boolean isApproved;
     private int owner;
     private String hours;
-    private Integer rating = 0;
+    private Double rating = 0.0;
     private Integer numOfReviews = 0;
 
     public Brewery(){
 
     }
 
-    public Brewery(String breweryName, String imageURL, String phoneNumber, String address, boolean isApproved, int owner, Integer numOfReviews) {
+    public Brewery(String breweryName, String imageURL, String phoneNumber, String address, boolean isApproved, int owner, String hours, Double rating, Integer numOfReviews) {
         this.breweryName = breweryName;
         this.imageURL = imageURL;
         this.phoneNumber = phoneNumber;
@@ -93,11 +93,11 @@ public class Brewery {
         this.hours = hours;
     }
 
-    public int getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 

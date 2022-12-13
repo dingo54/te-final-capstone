@@ -42,4 +42,15 @@ public class BreweryController {
         }
         breweryDao.updateBreweryAdmin(breweryId, brewery);
     }
+
+@ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(path = "/brewery/{breweryId}", method = RequestMethod.DELETE)
+    public boolean delete(@PathVariable int breweryId) {
+    if (!breweryDao.delete(breweryId)) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Brewery " + breweryId + " not found");
+    } else {
+        return breweryDao.delete(breweryId);
+    }
+}
+
 }

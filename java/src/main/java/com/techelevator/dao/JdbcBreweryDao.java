@@ -33,10 +33,10 @@ public class JdbcBreweryDao implements BreweryDao{
 
         for(Brewery brewery : breweries){
             int breweryId = brewery.getBreweryId();
-            sql = "SELECT ROUND(AVG(rating),1) as rating FROM public.beer_reviews WHERE brewery_id=?;";
-            Integer rating = jdbcTemplate.queryForObject(sql, Integer.class, breweryId);
+            sql = "SELECT ROUND(AVG(rating),2) as rating FROM public.beer_reviews WHERE brewery_id=?;";
+            Double rating = jdbcTemplate.queryForObject(sql, Double.class, breweryId);
             if (rating == null) {
-                brewery.setRating(5);
+                brewery.setRating(5.0);
             } else {
                 brewery.setRating(rating);
             }
@@ -72,9 +72,9 @@ public class JdbcBreweryDao implements BreweryDao{
             brewery = mapToBrewery(result);
         }
         sql = "SELECT ROUND(AVG(rating),1) as rating FROM public.beer_reviews WHERE brewery_id=?;";
-        Integer rating = jdbcTemplate.queryForObject(sql, Integer.class, breweryId);
+        Double rating = jdbcTemplate.queryForObject(sql, Double.class, breweryId);
         if (rating == null) {
-            brewery.setRating(0);
+            brewery.setRating(0.0);
         } else {
             brewery.setRating(rating);
         }
@@ -161,8 +161,9 @@ public class JdbcBreweryDao implements BreweryDao{
 
     @Override
     public boolean delete(int breweryId) {
-
-        String sql = "DELETE FROM public.brewery WHERE brewery_id = ?;";
+        String sql = "DELETE FROM beer_reviews WHERE brewery_id = ?;";
+        jdbcTemplate.update(sql, breweryId);
+        sql = "DELETE FROM public.brewery WHERE brewery_id = ?;";
         int numOfRowsDeleted = jdbcTemplate.update(sql, breweryId);
         return numOfRowsDeleted == 1;
     }

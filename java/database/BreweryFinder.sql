@@ -24,18 +24,18 @@ CREATE TABLE users (
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
-CREATE TABLE brewery_reviews (
-    review_id serial NOT NULL,
-    brewery_id int NOT NULL,
-    user_id int NOT NULL,
-    rating int NOT NULL,
-    review varchar(1000) NULL,
-    response varchar(600) NULL,
+-- CREATE TABLE brewery_reviews (
+--     review_id serial NOT NULL,
+--     brewery_id int NOT NULL,
+--     user_id int NOT NULL,
+--     rating int NOT NULL,
+--     review varchar(1000) NULL,
+--     response varchar(600) NULL,
 
-    CONSTRAINT pk_brewery_review PRIMARY KEY (review_id),
-    CONSTRAINT fk_brewery_review_brewery_id FOREIGN KEY (brewery_id) REFERENCES brewery (brewery_id),
-    CONSTRAINT fk_brewery_review_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
-);
+--     CONSTRAINT pk_brewery_review PRIMARY KEY (review_id),
+--     CONSTRAINT fk_brewery_review_brewery_id FOREIGN KEY (brewery_id) REFERENCES brewery (brewery_id),
+--     CONSTRAINT fk_brewery_review_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
+-- );
 
 CREATE TABLE favorites (
     brewery_id int NOT NULL,
@@ -315,28 +315,7 @@ INSERT INTO public.time(brewery_id, day, open_time, close_time, open) VALUES
     (8, 5, 8, 11, true),
     (8, 6, 8, 11, false);
 
-/***********************************************************************************************************
- Populating brewewry review
-***********************************************************************************************************/
-INSERT INTO public.brewery_reviews(brewery_id, user_id, rating, review) VALUES
-    (1, 3, 5, 'I was pleasantly surprised! Great beer selection and the food was delicious. Large portions and reasonably priced. A bunch of vegan options, and outdoor seating. Will definitely be returning!'),
-    (1, 4, 5, 'I had one of their IPAs at another restaurant, and it was so good I had to come here. All of their IPAs were flavorful, but actually the most impressive one was the Pilsner! Most pilsners I''ve had up until now were kind of simple and boring, but this one was really delicious, citrusy, and full of character.'),
-    (1, 5, 5, 'Good line up of beers, fries are good. Buffalo cauliflower doesn’t have a hint of Buffalo at all unfortunately. Great breading and very fresh otherwise. Just want that SPICE, the dip page sauce is on point though. Great lil buddy “citywide” too. Cool late night spot to go with friends.'),
-    (2, 3, 5, 'Decided to walk up to Crime and Punishment on a humid end of Summer Saturday. The interior was relaxed and inviting, and service great overall. We grabbed a seat and were treated to several delicious beers and surprisingly good pierogis. Would definitely come back next time we''re in the area!'),
-    (2, 4, 4, 'A cool lowkey spot in Brewerytown. The Space Race IPA was pretty good. Definitely worth a stop if you''re in the neighborhood and like beer.'),
-    (2, 5, 5, 'Small craft brewery. Excellent, friendly staff. We tried several different beers and all were excellent. Tender toward more happy IPA flavors but also had a nice lager, pilsner and one more like a sour. A few small nosh foods. We had awesome pirogies and spicy dipping sauce and pita bread. The pretzels also looked great. Reasonable prices but boy the Philly alcohol AND beer taxes are crazy. On-street parking so may need to park a couple blocks away. Recommend you drop by and give them a try!'),
-    (3, 3, 5, 'Me & girlfriend took the tour which was amazing. Mike was phenomenal & very knowledgeable. Tour is roughly 45 minutes. Very informative. Clean environment, clean place and clean staff! For 10$ a person, I HIGHLY HIGHLY recommend the tour. You get a sample, canned beer & a souvenir. Which would equate to more than 10$. Very nice historical education of yards. 10/10 recommend. Will likely return'),
-    (3, 4, 4, 'Good food. Pretty much something for everyone. Beer is also really really good. When I first went here I didn''t care for what they had on tap but they''ve def added more variety (I''m pretty sure feel free to call me out on being wrong lol). Cool venue. We saw a wedding reception there once. Their merch store is A+. Bought several things there over the course of several trips lol. To put it in perspective, this was the first place my fiance wanted to go to after running the Philadelphia Marathon. She said it was worth it. 💙'),
-    (3, 5, 5, 'Great beer. Great people. Awesome atmosphere. We loved it! Been on our list for awhile and we were so happy to check it off our brewery list! Thanks for making a great experience'),
-    (4, 3, 5, 'Visited Love City Brewing after a concert at Franklin Music Hall and had a wonderful, chill time. The beers were on point and the crowd was all having a great experience. Some more food options would have been nice, but it''s a minor complaint. Highly recommend a visit!'),
-    (4, 4, 5, 'Cool effing place, great beers and cool people pulling the taps! I just popped in on the word of a friend and I’m glad I did. $4 pints happy hour specials until 6:00!'),
-    (4, 5, 5, 'Some excellent and somewhat unique beer options and great service.  No flights offered but the friendly and helpful bartender more than made up for it by her willingness to let us sample a whole bunch.  Dreamcycle and Driponomics were the two standout offerings for us.'),
-    (5, 3, 3, 'Had a great time. Good drinks and watched football all day. However the owners decided they wanted our table and the one next to us. So they told us we had to close out. Day went from a 10 to a 1. Disappointed that patrons would be treated this way. Understandable that they wanted to watch Eagles vs. Cowboys. We planned to watch that game here also and already had a $200 tab. Would I come back again to see if things are different a other weekend? Yes.'),
-    (5, 4, 2, 'I have been to this establishment many times, but have never been disrespected in the way I have tonight. The server, "Devon" approached our table and noticed we already had beers. Thus he refused to serve our table water because we had drinks already, unless we started a tab. There is not an establishment in Philadelphia that would make such a request. Honestly, we got drinks before the table became available and we intended on buying more rounds, but this behavior is unacceptable! If I''m a paying customer, which is clear because we had round of drinks, I should not have to start a tab for WATER! This was the worst service I''ve ever had in a bar in Philly.  My friends and I should not be subjected to this behavior. Please correct this as we would have had many rounds of drinks, but given this behavior, we will spend our money elsewhere. Btw, the bar was not that busy!'),
-    (5, 5, 2, 'Wayyyyy below average. Cocktails are all drowning in lime juice and food all seems to be frozen prior to cooking. Not impressed at all'),
-    (6, 5, 5, NULL),
-    (7, 4, 4, NULL),
-    (8, 4, 5, NULL);
+
 	
 /***********************************************************************************************************
  Populating beer review
