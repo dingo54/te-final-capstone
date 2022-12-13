@@ -1,6 +1,11 @@
 <template>
   <div>
     <section id="cards">
+      <article class="brewery-card" v-on:click="addBrewery()">
+        <div class="add">
+          +
+        </div>
+      </article>
       <article class="brewery-card" 
         v-for="brewery in breweries" 
         v-bind:key="brewery.breweryId"
@@ -31,6 +36,9 @@ export default {
   methods: {
     viewBreweryDetail(breweryID) {
       this.$router.push(`/brewery/${breweryID}`)
+    },
+    addBrewery(){
+      this.$router.push(`/breweryForm`)
     }
   },
   created() {

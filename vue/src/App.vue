@@ -154,7 +154,7 @@ main #cards article {
 #page-main {
   padding: 10px 20px;
 }
-/********************************************** Login/Register **********************************************/
+/********************************************** Form **********************************************/
 .form {
   max-width: 400px;
   margin: 0 auto;
@@ -229,6 +229,24 @@ input[type="radio"] {
 input:checked + label {
   background-color: rgba(0,0,255,1);
 }
+input {
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  padding: 3px;
+}
+textarea {
+    width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+}
 
 /********************************************** Brewery Page **********************************************/
 #page-header {
@@ -264,6 +282,15 @@ input:checked + label {
 }
 .brewery-info #hours {
   flex-grow: 1;
+}
+.add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: grey;
+  height: 100%;
+  color: white;
+  font-size: 100px;
 }
 /************************* Beer List ********************************************/
 .beerHeader {
