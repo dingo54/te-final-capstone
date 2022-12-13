@@ -30,6 +30,28 @@ public class JdbcBreweryDao implements BreweryDao{
         while(result.next()){
             breweries.add(mapToBrewery(result));
         }
+
+        for(Brewery brewery : breweries){
+            int breweryId = brewery.getBreweryId();
+            sql = "SELECT ROUND(AVG(rating),1) as rating FROM public.beer_reviews WHERE brewery_id=?;";
+            Integer rating = jdbcTemplate.queryForObject(sql, Integer.class, breweryId);
+            if (rating == null) {
+                brewery.setRating(5);
+            } else {
+                brewery.setRating(rating);
+            }
+        }
+        return breweries;
+    }
+
+    public List<Brewery> getAllUnapprovedBreweries() {
+        List<Brewery> breweries = new ArrayList<>();
+        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description\n, is_approved, owner, hours" +
+                "\tFROM public.brewery WHERE is_approved = false;";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql);
+        while(result.next()){
+            breweries.add(mapToBrewery(result));
+        }
         return breweries;
     }
 
@@ -42,21 +64,31 @@ public class JdbcBreweryDao implements BreweryDao{
         while(result.next()){
             brewery = mapToBrewery(result);
         }
+        sql = "SELECT ROUND(AVG(rating),1) as rating FROM public.beer_reviews WHERE brewery_id=?;";
+        Integer rating = jdbcTemplate.queryForObject(sql, Integer.class, breweryId);
+        if (rating == null) {
+            brewery.setRating(0);
+        } else {
+            brewery.setRating(rating);
+        }
         return brewery;
     }
 
     @Override
     public Brewery addBrewery(Brewery brewery) {
         Brewery newBrewery = new Brewery();
-        newBrewery.setPhoneNumber(brewery.getPhoneNumber());
-        newBrewery.setImageURL(brewery.getImageURL());
         newBrewery.setBreweryName(brewery.getBreweryName());
-        newBrewery.setAddress(brewery.getBreweryName());
+        newBrewery.setPhoneNumber(brewery.getPhoneNumber());
+        newBrewery.setAddress(brewery.getAddress());
         newBrewery.setHours(brewery.getHours());
+        newBrewery.setImageURL(brewery.getImageURL());
+        newBrewery.setDescription(brewery.getDescription());
+        newBrewery.setIsApproved(false);
+        newBrewery.setOwner(brewery.getOwner());
         String sql="INSERT INTO public.brewery(\n" +
-                "\tbrewery_name, phone_number, address, image_url, description, hours)\n" +
-                "\tVALUES (?, ?, ?, ?, ?, ?) RETURNING brewery_id;";
-        int breweryId = jdbcTemplate.queryForObject(sql, int.class, newBrewery.getBreweryName(),newBrewery.getPhoneNumber(),newBrewery.getAddress(),newBrewery.getImageURL(), newBrewery.getDescription(), newBrewery.getHours());
+                "\tbrewery_name, phone_number, address, hours, image_url, description, is_approved, owner)\n" +
+                "\tVALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING brewery_id;";
+        int breweryId = jdbcTemplate.queryForObject(sql, int.class, newBrewery.getBreweryName(),newBrewery.getPhoneNumber(),newBrewery.getAddress(), newBrewery.getHours(), newBrewery.getImageURL(), newBrewery.getDescription(), false, newBrewery.getOwner());
         newBrewery.setBreweryId(breweryId);
         return newBrewery;
     }

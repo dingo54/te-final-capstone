@@ -28,7 +28,7 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(path = "/admin", method = RequestMethod.GET)
     public List<Brewery> getBrewer(){
-        return breweryDao.getAllBreweries();
+        return breweryDao.getAllUnapprovedBreweries();
     }
 
     //Admin can update existing breweries approved status to true or false

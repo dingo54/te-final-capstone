@@ -1,7 +1,6 @@
 <template>
   <section class="form">
     <form @submit.prevent="updateBeer" class="form-beer">
-      <p>{{this.beer}}</p>
       <h1>Update Beer</h1>
       <div>
         <label class="sr-only">Name</label>
@@ -22,7 +21,7 @@
         <input v-model="beer.image" placeholder="Image URL" type="text" />
       </div>
       <label class="sr-only">Description</label>
-      <input v-model="beer.description" placeholder="Description" type="text" />
+      <textarea v-model="beer.description" placeholder="Description" type="text"></textarea>
       <div>
         <button type="submit" class="button">Submit</button>
         <button v-on:click.prevent="resetForm" class="button">Cancel</button>
