@@ -10,7 +10,7 @@ public class Brewery {
     private boolean isApproved;
     private int owner;
     private String hours;
-//    private int rating;
+    private Integer rating = 0;
 
     public Brewery(){
 
@@ -24,7 +24,7 @@ public class Brewery {
         this.isApproved = isApproved;
         this.owner = owner;
         this.hours = hours;
-//        this.rating = rating;
+        this.rating = rating;
     }
 
     public String getDescription() {
@@ -91,13 +91,13 @@ public class Brewery {
         this.hours = hours;
     }
 
-//    public int getRating() {
-//        return rating;
-//    }
+    public int getRating() {
+        return rating;
+    }
 
-//    public void setRating(int rating) {
-//        this.rating = rating;
-//    }
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
 
     @Override
     public String toString() {
