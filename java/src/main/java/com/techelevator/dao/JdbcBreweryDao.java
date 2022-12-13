@@ -30,6 +30,27 @@ public class JdbcBreweryDao implements BreweryDao{
         while(result.next()){
             breweries.add(mapToBrewery(result));
         }
+        /*
+        for(Brewery brewery : breweries){
+            int breweryId = brewery.getBreweryId();
+            sql = "SELECT ROUND(AVG(rating),1) as rating FROM public.beer_reviews WHERE brewery_id=?;";
+            int rating = jdbcTemplate.queryForObject(sql, Integer.class, breweryId);
+            if (rating ==)
+            brewery.setRating(rating);
+        }
+
+         */
+        return breweries;
+    }
+
+    public List<Brewery> getAllUnapprovedBreweries() {
+        List<Brewery> breweries = new ArrayList<>();
+        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description\n, is_approved, owner, hours" +
+                "\tFROM public.brewery WHERE is_approved = false;";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql);
+        while(result.next()){
+            breweries.add(mapToBrewery(result));
+        }
         return breweries;
     }
 
