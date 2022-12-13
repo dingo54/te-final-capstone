@@ -64,7 +64,7 @@ CREATE TABLE beer (
     price money NULL,
     abv float(2) NULL,
     image text NULL,
-    description varchar(1000) NULL,
+    description text NULL,
 
     CONSTRAINT pk_beer PRIMARY KEY (beer_id)
 );
