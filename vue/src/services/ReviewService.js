@@ -14,5 +14,8 @@ export default {
     },
     addReview(review) {
         return http.post('/review', review)
+    },
+    deleteReview(reviewId){
+      return http.delete(`/reviews/${reviewId}`)
     }
   }

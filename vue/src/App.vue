@@ -325,13 +325,18 @@ textarea {
   display: flex;
   justify-content: space-between;
 }
-/************************* Beer List ********************************************/
 .beer-link,
 .beer-image {
   cursor:pointer;
 }
 .beer-link:hover {
   text-decoration: underline;
+}
+.review {
+  border-bottom: 5px solid var(--blue);
+}
+.review:last-child {
+  border: none;
 }
 /************************* Admin ********************************************/
 table {
