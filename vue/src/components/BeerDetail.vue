@@ -1,8 +1,8 @@
 <template>
-  <div class="page">
+  <div class="beer">
      <article>
       <div class="beer-info">
-        <h3 v-bind:beer=beer >{{ beer.name }}</h3>
+        <h3 v-bind:beer=beer  >{{ beer.name }}</h3>
         <h4>{{ beer.style }}</h4>
         <h4>ABV: {{ beer.abv }}</h4>
         <h4>${{ beer.price }}</h4>

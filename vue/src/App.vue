@@ -298,7 +298,14 @@ input:checked + label {
   display: flex;
   justify-content: space-between;
 }
-
+/************************* Beer List ********************************************/
+.beer-link,
+.beer-image {
+  cursor:pointer;
+}
+.beer-link:hover {
+  text-decoration: underline;
+}
 
 /************************* Device Breakpoints (screen size) ********************************************/
 @media screen and (max-width: 900px) {

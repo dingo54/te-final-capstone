@@ -42,6 +42,16 @@ export default new Vuex.Store({
       abv: 0,
       image: '',
       description: ''
+    },
+    reviews: [],
+    review: {
+      review_id: 0,
+      beerId: 0,
+      username: '',
+      userId: 0,
+      breweryId: 0,
+      rating: 0,
+      review: ''
     }
   },
   mutations: {
@@ -69,6 +79,9 @@ export default new Vuex.Store({
     },
     SET_CURRENT_BEER(state, data) {
       state.beer = data;
+    },
+    SET_CURRENT_REVIEW(state, data) {
+      state.review = data;
     }
   }
 })

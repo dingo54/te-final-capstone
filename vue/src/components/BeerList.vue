@@ -7,15 +7,15 @@
     <div v-for="beer in beers" v-bind:key="beer.beerId" class="beer">
       <article>
       <div class="beer-info">
-        <h3 v-on:click="viewBeerDetail(beer.beerId)" v-bind:beer=beer >{{ beer.name }}</h3>
+        <h3 v-on:click="viewBeerDetail(beer.beerId)" v-bind:beer="beer" class="beer-link" >{{ beer.name }}</h3>
         <h4>{{ beer.style }}</h4>
         <h4>ABV: {{ beer.abv }}</h4>
         <h4>${{ beer.price }}</h4>
         <p>{{ beer.description }}</p>
       </div>
       <div class="beer-image-container">
-        <img v-bind:src="beer.image" v-if="beer.image !== null" v-on:click="viewBeerDetail(beer.beerId)" />
-        <img src="../assets/mug.png" v-if="beer.image === null" v-on:click="viewBeerDetail(beer.beerId)" />
+        <img v-bind:src="beer.image" v-if="beer.image !== null" v-on:click="viewBeerDetail(beer.beerId)" class="beer-image"/>
+        <img src="../assets/mug.png" v-if="beer.image === null" v-on:click="viewBeerDetail(beer.beerId)" class="beer-image"/>
       </div>
     </article>
     <div class="brewer-btns" v-show="brewerStatus===true">

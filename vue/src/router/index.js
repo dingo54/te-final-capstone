@@ -9,6 +9,7 @@ import Brewery from '../views/Brewery.vue'
 import BeerForm from '../views/BeerForm.vue'
 import UpdateBeerForm from '../views/UpdateBeerForm.vue'
 import Beer from '../views/Beer.vue'
+import ReviewForm from '../views/ReviewForm.vue'
 
 Vue.use(Router)
 
@@ -87,6 +88,14 @@ const router = new Router({
       component: Beer,
       meta: {
         requiresAuth: false
+      },
+    },
+    {
+      path: "/reviewForm",
+      name: 'ReviewForm',
+      component: ReviewForm,
+      meta: {
+        requiresAuth: true
       }
     }
   ]

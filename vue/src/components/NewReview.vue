@@ -1,9 +1,8 @@
 <template>
   <section class="form">
-    <form @submit.prevent="updateBeer" class="form-beer">
-      <p>{{this.beer}}</p>
-      <h1>Update Beer</h1>
-      <div>
+    <form @submit.prevent="addNewReview" class="form-beer">
+      <h1>Add Review</h1>
+      <!-- <div>
         <label class="sr-only">Name</label>
         <input v-model="beer.name" placeholder="Name" type="text" />
       </div>
@@ -26,20 +25,43 @@
       <div>
         <button type="submit" class="button">Submit</button>
         <button v-on:click.prevent="resetForm" class="button">Cancel</button>
+      </div> --->
+      <!--
+      <div>
+        <label class="sr-only">Rating:</label>
+        <input v-model="review.rating" placeholder="Rating" type="text" />
+      </div>
+      -->
+      <label for="rating">Rating:</label>
+
+        <select name="rating" id="cars"  v-model="review.rating" placeholder="5">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+      <div>
+          <label class="sr-only">Review:</label>
+          <input v-model="review.review" placeholder="Type your review here" type="textarea" />
+      </div>
+      <div>
+        <button type="submit" class="button">Submit</button>
+        <button v-on:click.prevent="resetForm" class="button">Cancel</button>
       </div>
     </form>
   </section>
 </template>
 
 <script>
-import BeerService from "../services/BeerService";
+import ReviewService from "../services/ReviewService";
 export default {
     methods:{
-    updateBeer() {
-      BeerService.updateBeer(this.beer.beerId, this.beer)
+    addNewReview() {
+      ReviewService.addReview(this.review)
         .then((response) => {
           if (response.status ===201 || response.status===200) {
-            this.$router.push(`/brewery/${this.$store.state.brewery.breweryId}`)
+            this.$router.push(`/beer/${this.$store.state.beer.beerId}`)
           }
         })
         .catch((error) => {
@@ -50,20 +72,18 @@ export default {
       this.$router.push(`/brewery/${this.$store.state.brewery.breweryId}`);
     },
     },
-  name: "update-beer",
+  name: "new-review",
   data() {
     return {
       message: "",
-      beer: {
-        breweryId: this.$store.state.brewery.breweryId,
+      review: {
         beerId: this.$store.state.beer.beerId,
-        name: this.$store.state.beer.name,
-        style: this.$store.state.beer.style,
-        price: this.$store.state.beer.price,
-        abv: this.$store.state.beer.abv,
-        image: this.$store.state.beer.image,
-        description: this.$store.state.beer.description,
-      },
+        username: this.$store.state.user.username,
+        userId: this.$store.state.user.id,
+        breweryId: this.$store.state.brewery.breweryId,
+        rating: 0,
+        review: ''
+        }
     };
   },
 };
