@@ -13,8 +13,6 @@
                 v-bind:key="n"
               ></i></h4>
           <p>{{ review.review }}</p>
-          <!--v-for="n in brewery.rating"
-              v-bind:key="n"-->
         </div>
       </article> 
       
