@@ -2,7 +2,8 @@
   <section class="form">
     <form @submit.prevent="addNewReview" class="form-beer">
       <h1>Add Review</h1>
-      <label for="rating">Rating:</label>
+      <div>
+        <label for="rating">Rating: </label>
         <select name="rating" id="cars"  v-model="review.rating" placeholder="5">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -10,9 +11,10 @@
             <option value="4">4</option>
             <option value="5">5</option>
         </select>
+      </div>
       <div>
           <label class="sr-only">Review:</label>
-          <input v-model="review.review" placeholder="Type your review here" type="textarea" />
+          <textarea v-model="review.review" placeholder="Type your review here" type="textarea"></textarea>
       </div>
       <div>
         <button type="submit" class="button">Submit</button>

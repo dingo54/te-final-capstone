@@ -8,5 +8,8 @@ export default {
   
   getUnapprovedBreweries() {
       return http.get('/admin',{headers:{Authorization:'Bearer ' + localStorage.getItem('token')}});
+  },
+  updateBrewery(breweryId,brewery) {
+    return http.put(`/admin/${breweryId}`, brewery,{headers:{Authorization:'Bearer ' + localStorage.getItem('token')}});
   }
 }

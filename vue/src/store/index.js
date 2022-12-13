@@ -30,7 +30,9 @@ export default new Vuex.Store({
       description: '',
       isApproved:false,
       owner:'',
-      hours:""
+      hours:"",
+      rating: 0,
+      numOfReviews: 0
     },
     beers: [],
     beer: {

@@ -16,7 +16,7 @@
           <p><i class="fa-solid fa-location-dot blue"></i> {{ brewery.address }}</p>
           <p style="flex-grow:1;"><i class="fa-solid fa-phone blue"></i> {{ brewery.phoneNumber }}</p>
           <p><i class="fa fa-solid fa-clock blue" aria-hidden="true"></i>{{brewery.hours}}</p>
-          <p><i class="fa-solid fa-star"></i>Avg Rating and # Reviews here</p>
+          <p>Average Rating: <i class="fa-solid fa-star"></i> {{brewery.rating}} | {{brewery.numOfReviews}} Review<span v-if="brewery.numOfReviews>1">s</span></p>
         </div>
         <img v-bind:src="brewery.imageURL" class="brewery-image" />
       </article>

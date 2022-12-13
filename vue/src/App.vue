@@ -318,8 +318,8 @@ textarea {
   border: none;
 }
 .beer-image-container img {
-  width: 200px;
-  height: auto;
+  height: 200px;
+  width: auto;
 }
 .brewer-btns {
   display: flex;
@@ -333,6 +333,18 @@ textarea {
 .beer-link:hover {
   text-decoration: underline;
 }
+/************************* Admin ********************************************/
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+tbody td,
+tbody td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+tbody tr:nth-child(even){background-color: #f2f2f2;}
+tbody tr:hover {background-color: #ddd;}
 
 /************************* Device Breakpoints (screen size) ********************************************/
 @media screen and (max-width: 900px) {

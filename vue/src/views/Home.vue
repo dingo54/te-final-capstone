@@ -1,8 +1,10 @@
 <template>
   <div class="home">
-    <brewer-list v-if="this.role==brewer"/>
-    <brewery-list v-if="this.$store.state.token=='' || role==user"/>
-    <admin-table v-if="this.role==this.admin" />
+    <brewer-list v-show="this.role==brewer"/>
+    <hr />
+    <brewery-list v-show="this.$store.state.token=='' || role==user"/>
+    <hr />
+    <admin-table v-show="this.role==this.admin" />
   </div>
 </template>
 

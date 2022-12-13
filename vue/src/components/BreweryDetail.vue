@@ -8,7 +8,7 @@
         <h3><i class="fa-solid fa-phone blue"></i> {{ brewery.phoneNumber }}</h3>
         <h3 id="hours"><i class="fa-solid fa-clock blue"></i> {{brewery.hours}}</h3>
         
-        <h4><i class="fa-solid fa-star"></i> Avg Rating and # of Reviews here</h4>
+        <h4>Average Rating: <i class="fa-solid fa-star"></i> {{brewery.rating}} | {{brewery.numOfReviews}} Review<span v-if="brewery.numOfReviews>1">s</span></h4>
       </div>
     </div>
     <div id="page-main">
