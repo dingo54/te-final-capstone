@@ -12,7 +12,8 @@
           <p><i class="fa-solid fa-location-dot blue"></i> {{ brewery.address }}</p>
           <p style="flex-grow:1;"><i class="fa-solid fa-phone blue"></i> {{ brewery.phoneNumber }}</p>
           <p><i class="fa-solid blue fa-clock"></i> {{brewery.hours}}</p>
-          <p>Average Rating: <i class="fa-solid fa-star"></i> {{brewery.rating}} | {{brewery.numOfReviews}} Review<span v-if="brewery.numOfReviews>1">s</span></p>
+          <h4 v-if="brewery.numOfReviews===0">No Ratings</h4>
+        <h4 v-if="brewery.numOfReviews!==0">Average Rating: <i class="fa-solid fa-star"></i> {{brewery.rating}} | {{brewery.numOfReviews}} Review<span v-if="brewery.numOfReviews>1">s</span></h4>
         </div>
         <img v-bind:src="brewery.imageURL" class="brewery-image" />
       </article>

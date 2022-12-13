@@ -7,8 +7,8 @@
           <h3 id="address"><i class="fa-solid fa-location-dot blue"></i> {{ brewery.address }}</h3>
         <h3><i class="fa-solid fa-phone blue"></i> {{ brewery.phoneNumber }}</h3>
         <h3 id="hours"><i class="fa-solid fa-clock blue"></i> {{brewery.hours}}</h3>
-        
-        <h4>Average Rating: <i class="fa-solid fa-star"></i> {{brewery.rating}} | {{brewery.numOfReviews}} Review<span v-if="brewery.numOfReviews>1">s</span></h4>
+        <h4 v-if="brewery.numOfReviews===0">No Ratings</h4>
+        <h4 v-if="brewery.numOfReviews!==0">Average Rating: <i class="fa-solid fa-star"></i> {{brewery.rating}} | {{brewery.numOfReviews}} Review<span v-if="brewery.numOfReviews>1">s</span></h4>
       </div>
     </div>
     <div id="page-main">
