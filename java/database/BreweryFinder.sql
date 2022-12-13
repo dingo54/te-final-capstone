@@ -12,7 +12,6 @@ CREATE TABLE brewery (
     description text NULL,
 	is_approved boolean DEFAULT false,
     owner int NULL,
-	
 
     CONSTRAINT pk_brewery PRIMARY KEY (brewery_id)
 );
@@ -25,6 +24,19 @@ CREATE TABLE users (
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
+CREATE TABLE brewery_reviews (
+    review_id serial NOT NULL,
+    brewery_id int NOT NULL,
+    user_id int NOT NULL,
+    rating int NOT NULL,
+    review varchar(1000) NULL,
+    response varchar(600) NULL,
+
+    CONSTRAINT pk_brewery_review PRIMARY KEY (review_id),
+    CONSTRAINT fk_brewery_review_brewery_id FOREIGN KEY (brewery_id) REFERENCES brewery (brewery_id),
+    CONSTRAINT fk_brewery_review_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
+
 CREATE TABLE favorites (
     brewery_id int NOT NULL,
     user_id int NOT NULL,
@@ -32,6 +44,14 @@ CREATE TABLE favorites (
     CONSTRAINT pk_favorites_brewery_id_user_id PRIMARY KEY (brewery_id, user_id),
     CONSTRAINT fk_favorites_brewery_id FOREIGN KEY (brewery_id) REFERENCES brewery (brewery_id),
     CONSTRAINT fk_favorites_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
+
+CREATE TABLE time (
+	brewery_id int NOT NULL,
+    day int NULL,
+    open_time int NULL,
+    close_time int NULL,
+    open boolean NOT NULL
 );
 
 CREATE TABLE beer (
@@ -42,25 +62,24 @@ CREATE TABLE beer (
     price money NULL,
     abv float(2) NULL,
     image text NULL,
-    description text NULL,
+    description varchar(1000) NULL,
 
     CONSTRAINT pk_beer PRIMARY KEY (beer_id)
 );
 
-CREATE TABLE beer_reviews (  
+CREATE TABLE beer_reviews (
     review_id serial NOT NULL,
     beer_id int NOT NULL,
     user_id int NOT NULL,
 	brewery_id int NOT NULL,
     rating int NOT NULL,
     review varchar(600) NULL,
-	
-	
 
     CONSTRAINT pk_beer_review PRIMARY KEY (review_id),
     CONSTRAINT fk_beer_review_beer_id FOREIGN KEY (beer_id) REFERENCES beer (beer_id),
     CONSTRAINT fk_beer_review_user_id FOREIGN KEY (user_id) REFERENCES users (user_id),
 	CONSTRAINT fk_beer_review_brewery_id FOREIGN KEY (brewery_id) REFERENCES brewery (brewery_id)
+	
 );
 
 
@@ -213,30 +232,147 @@ INSERT INTO public.beer(brewery_id, name, style, price, abv, image, description)
     	(24, 'ROCKY RIDGE ROCK CANDY', 'Fruit Sour', 8, 5.5, 'https://craftypint.s3.amazonaws.com/crafty/beer/Rocky-Ridge-Rock-Candy-221117-213947.png', 'Amid the constant flow of limited and seasonal releases, Rocky Ridge have expanded their core range with a refreshingly tart, fruited sour in the form of Rock Candy – a beer five years in the making that should slot effortlessly into the creative lineup from the Jindong brewers.Passionfruit, kiwifruit and strawberry all feature in the beer''s fruit forward palate while retaining a pleasing drinkability. A short but sharp finish cleanses the palate with each sip, further enhancing its fruity, refreshing nature, while 5.5 percent ABV hints at repeatability – at least when sat alongside many of their far larger concoctions.It makes for a simple but entirely effective offering from Rocky Ridge, with Rock Candy a great all-rounder for those looking for a fruit-leaning sour existing well away from lactose-laden pastry bombs.'),
     	(24, 'ROCKY RIDGE JINDONG JUICY', 'Juicy Pale Ale', 7, 5.5, 'https://craftypint.s3.amazonaws.com/crafty/beer/Rocky-Ridge-Jindong-Juicy-211213-173022.png', 'Brewer''s notes: Pouring with a medium level of hop haze, this juicy pale ale is loaded with tropical fruit and citrus characteristics that are complemented nicely by a low yet cleansing level of bitterness. Well-balanced, highly sessionable and packed with flavour, texture and aroma - it really is a beer for all occasions.'),
     	(24, 'ROCKY RIDGE BABY PEACH', 'Fruited Session IPA', 5, 4, 'https://craftypint.s3.amazonaws.com/crafty/beer/Rocky-Ridge-Baby-Peach-211213-173128.png', 'Brewer''s notes: Live with vibrant peach aromas, this smooth and highly enjoyable fruited IPA has a low level of bitterness that is complemented by a soft & creamy mouthfeel. Made using natural puréed fruit, a lower ABV makes this a highly sessionable beer that is unlike anything else.'),
+		(24, 'Example Beer Name', 'Example Style', 100, 5, 'Image url', 'Example Description'),
 		(25, ' Hallertau Pils', 'German-Style Pilsner', 7, 5.2, 'https://breweriesinpa.com/wp-content/uploads/2021/01/Screen-Shot-2021-01-27-at-9.38.52-PM.png', ' Hallertau pils is brewed as an ode to the industrial German pilsners of the 50’s to the late 70’s when technology allowed more efficient processes, but the liquid was still brewed “the old way”. We use a double decoction mash, 100% German Pilsner malt, and 100% German Hallertau Mittlefru hops..'),
-	(25, 'Rauchschloss', 'Bamberg-style Smoked Amber Lager', 6, 5, 'https://assets.untappd.com/photos/2022_11_15/1b28a3a49ee317a47304fc9ab3002af1_640x640.jpg', ' Brewed with 100% beechwood smoked malt from Weyermann malting in Bamberg, Germany, and 100% German grown Hallertau Mittlefru hops. We brew this beer using the same Franconian style, single decoction mash as our Burgenstrasse, gleaned from an 1865 brewing manual.'),
-	(25, 'Single Axis Mosaic', 'IPA', 5, 6.5, 'https://kaedrin.com/beerblog/wp-content/uploads/sites/3/2021/01/humanrobot-singleaxiscitra.jpg','This beautiful IPA is hopped exclusively with an overwhelming amount of luscious Mosaic. Close your eyes and take a magic carpet ride through fields of blueberry hubba bubba, mixed berry compote and mango jelly.'),
-	(26, 'Formation 2020', 'IPA', 8, 6.2, 'https://www.fermenteryform.com/wp-content/uploads/2021/07/52420FAB-37E4-42A6-A1DC-A3E49127FE8E-1024x1024.jpg', 'This batch of Formation was blended from 4 oak barrels of about 1 year in age. This batch is juicy, spicy and with a moderate earthy acidity. Bottles are 750ml, and $18 each. Batch #3 was released in February, 2021.'),
-	(26, 'SLO-MO 2020', 'IPA', 8, 6, 'https://www.fermenteryform.com/wp-content/uploads/2021/07/IMG_3563-768x1024.jpg', 'SLO-MO 2020 was blended from 2 year old barrels from our Solera, and aged on cherry and blackberry purée. It tastes of bright, lush cherries, with just a touch of blackberry jam, finishing light and refreshing. 6%, 750ml, $21 each. Batch #3 was released in February of 2021.'),
-	(26, 'Vieux Selection', 'IPA', 8, 7.5, 'https://www.fermenteryform.com/wp-content/uploads/2020/07/IMG_2559-712x1024.jpg', 'Vieux Selection is the culmination of 3 years of careful beer preservation and maturation in oak barrels. We’ve been inspired to do much of what we do, but the tradition of Belgian Lambic. Our favorite being Geuze, the blend of 1, 2 and 3 year old barrel aged beers. While our process differs from traditional Lambic in significant ways, the inspiration still comes through in the bottle. This beer has complex layers of flavor that come from the careful selection of barrels to blend. The aroma is earthy, minerally and spicy, the taste is a balance of tart fruits, woody resinous sweetness, and pithy bitterness. While being one of the most complex beers we have ever made, it’s still easy to drink. Bottles and draft, 7.5% abv. Released June of 2020.'),
-	(27, 'SOUR BATCH KEHD', 'Raspberry Berliner Weisse', 5,4.6, 'http://cheekymonkeyboston.com/wp-content/uploads/2017/07/3-SOUR.png', 'Light in body, sour tartness upfront with a raspberry candy finish'),
-	(27, 'HARAMBE''S GHOST', 'Double IPA', 8, 8.4, 'http://cheekymonkeyboston.com/wp-content/uploads/2017/07/5-DOUBLE-IPA.png', 'This brew is a big, robust deep amber IPA with a distinctive white, rock head.Hops, citrus, malt, pine, caramel and sweet malt backbone provide for a beautiful balance that finishes with lingering bitternes and citrus.'),
-	(27, 'REBELLIOUS MONK', 'Stout', 6, 6, 'http://cheekymonkeyboston.com/wp-content/uploads/2017/07/4-STOUT.png', 'Deep black in color.Roasted malt, coffee and dark chocolate flavor with subtle hop profile and creamy finish.'),
-	(28, 'GOOD GOOD', 'DOUBLE INDIA PALE ALE', 8, 8, 'https://d3omj40jjfp5tk.cloudfront.net/products/5dc769cdef17f81a69b4d4e6/large.png', 'A hazed-out, new school, fan favorite DIPA, double dry-hopped with a blend of Simcoe, Citra and Centennial hops. This beer boasts a pillowy mouthfeel with soft lingering bitterness. Its big fruity punches are balanced by pangs of spruce sap, pine and notes of resin.'),
-	(28, 'CLASSIC CREAM', 'AMERICAN CREAM ALE', 6, 5, 'https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hca/hcc/15421659414558.png', 'Our quintessential American Cream Ale made for drinking any time, and day. Comprised of Bohemian Pilsner malt and flaked maize, hopped gently with Hallertauer, then fermented low and slow for 3 weeks with a very cool ale strain, this beer is as crisp and easy drinking as they come.'),
-	(28, 'FRUITY DABS', 'DOUBLE INDIA PALE ALE', 9 ,8.7, 'https://d3omj40jjfp5tk.cloudfront.net/products/5ea4bfac2acaf624d1fa621a/large.png', 'A tropical double India Ale Pale, double dry-hopped with Centennial, Citra and Azacca hops, then conditioned on orange peel and vanilla for a citrusy punch. This tropical DIPA boasts distinct citrus tones with creamsicle and vanilla vibes, balanced by a hazy and resinous mouthfeel.'),
-	(29, 'I SAID WHAT I SAID', 'KEY LIME MARGARITA SOUR',4, 5, 'https://assets.untappd.com/site/beer_logos_hd/beer-4787185_c528f_hd.jpeg', 'This light blonde ale has been fermented with a special hybrid sour yeast for the perfect level of acidic tartness and then dosed with natural margarita flavor. No blender required.'),
-	(29, 'THERE’S NO CRYING IN BASEBALL', 'HAZY MANGO IPA', 8, 6, 'https://assets.untappd.com/site/beer_logos_hd/beer-3692046_f4843_hd.jpeg', 'A hazy IPA with natural mango flavor and a wicked curveball. Light, hazy, and refreshing, this beer is packed with flavor from hefty dry-hopping and natural mango. You could say it’s in a league of its own.'),
-	(29, 'PURPLE MONKEY DISHWASHER', 'CHOCOLATE PEANUTBUTTER PORTER', 8, 6.7, 'https://dth50iqs19w2y.cloudfront.net/de/f527aeb0344a089545a5b77dd59c9d/Evil-Genius-Purple-Monkey-Dishwasher-Chocolate-Peanut-Butter-Porter.png', 'If candy and beer had a beautiful liquid baby. Do you like chocolate and peanut butter but hate all that pesky chewing? Give your teeth a vacation with our rich, full-bodied chocolate peanut butter porter.'),
-	(30, 'Daddy Fat Sacks', 'IPA - American', 3, 6, 'https://images.squarespace-cdn.com/content/v1/53397a25e4b012d5a0b5039f/1449962985396-1TBTDUSDQ5YUH9ZN3LDJ/image-asset.jpeg', 'Our flagship IPA, named for all the fat sacks of dank hops that are used in the dry hop. Brewed with quality American 2-Row leaving a blank slate for the hops to explode. Hopped lightly during the boil and dry hopped excessively with Citra and Cascade. An awesomely dry IPA with tropical fruit and grapefruity goodness.'),
-	(30, 'Sour Hound', 'American Sour Ale', 4, 4, 'https://images.squarespace-cdn.com/content/v1/53397a25e4b012d5a0b5039f/1443123066845-EAZC659GZ4T9J86W2CVR/image-asset.jpeg', 'Tart and fruity, this traditional German wheat ale gets kettle soured and is fermented with fresh blueberries and blackberries. This red ale is sour, refreshing and reeks of fruit.'),
-	(30, 'Ludwigs Revenge', 'German Style Dark Lager', 5, 5.25, 'https://images.squarespace-cdn.com/content/v1/53397a25e4b012d5a0b5039f/1442789321962-LNYVCPKO6ZRAF5W0G6PT/image-asset.png', 'A smooth brown toasty German lager that expresses the beauty of malt. We emulate the traditional style that has always been popular in Germany and give it our own artistic twist. Malty, caramel, meaty, full bodied but clean.'),
-	(31, 'El Capitan', ' Lager - Pale', 5, 4.8, 'https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/ha6/h00/15233811709982.png', 'A Mexican-style Cerveza that is light and crisp. A lager brewed with Flaked Corn to deliver an extra dry finish. This beer is highly effervescent and extremely refreshing.'),
-	(31, 'Almanac', 'German-Style Pilsner', 6, 6.1, 'https://d3omj40jjfp5tk.cloudfront.net/products/61be9f6fb48440379370d52d/large.png', 'LOVE is bursting with hoppy tropical flavors. Built on a simple base of Pilsner malt and rolled oats, this super dank IPA has a pillowy mouthfeel and is double dry-hopped with Mosaic, Citra and Simcoe. Flavors of mango, cantaloupe, and citrus will keep you infatuated.'),
-	(31, 'Foreign Objects Wet Gravity', 'Dry Stout', 5, 5, 'https://d3omj40jjfp5tk.cloudfront.net/products/608c0760fb70287e109b0cf3/large.png', 'The density of our beloved hop essence in this gorgeous silken beer drips down from your head and soaks your feet. We hopped this densely with the eternally saturating Citra and Azacca hop varieties. The aromas of passion fruit, mango, and deep citrus-resin will drag you down by the river''s edge like rocks in your pockets, showing through like the deep brainsqueals and infinite pulse of gravity clinging to your senses and calling you home from across the furthest extremes of creation immensity.'),
-	(32, 'New Belgium Voodoo Ranger', 'Hazy Imperial IPA',8, 9.5, 'https://d3omj40jjfp5tk.cloudfront.net/products/630e3e5a432ffb2599149217/large.png', 'Juice Force is a fruit forward, highly drinkable, 9.5% ABV blast. Buckle up, with this hazy IPA you''ll be buzzing the tower in no time.'),
-	(32, '21st Amendment Down To Earth Session IPA', 'IPA',6 ,4.4, 'https://d3omj40jjfp5tk.cloudfront.net/products/5831dedd36d5f325c901fdcd/large.png', 'Whether you have a long mission behind you or a full afternoon ahead, this session IPA will help keep things real. More relaxed than an IPA, but with all the hop aroma and flavor, Down to Earth is our tribute to unsung heroes and unplanned adventures. Down to Earth is the natural evolution (pun intended) of Bitter American, our original session ale. We thought it would be fitting to bring our space chimp home and let him chill. Down to Earth is available year-round in 6 pack cans and on draft and pairs nicely with a variety of things, including lunch.'),
-	(32, 'Hoptimum', 'IPA - Triple', 8, 11, 'https://d3omj40jjfp5tk.cloudfront.net/products/60886fdee2bc5a7c7e90d92a/large.png', 'A group of hop-heads and publicans challenged our Beer Camp brewers to push the extremes of whole-cone hop brewing. The result is this: a 100 IBU, whole-cone hurricane of flavor. Simply put —Hoptimum: the biggest whole-cone IPA we have ever produced. Aggressively hopped, dry-hopped, AND torpedoed with our exclusive new hop varieties for ultra-intense flavors and aromas.Resinous “new-school” and exclusive hop varieties carry the bold and aromatic nose. The flavor follows the aroma with layers of aggressive hoppiness, featuring notes of grapefruit rind, rose, lilac, cedar, and tropical fruit—all culminating in a dry and lasting finish');
+		(25, 'Rauchschloss', 'Bamberg-style Smoked Amber Lager', 6, 5, 'https://assets.untappd.com/photos/2022_11_15/1b28a3a49ee317a47304fc9ab3002af1_640x640.jpg', ' Brewed with 100% beechwood smoked malt from Weyermann malting in Bamberg, Germany, and 100% German grown Hallertau Mittlefru hops. We brew this beer using the same Franconian style, single decoction mash as our Burgenstrasse, gleaned from an 1865 brewing manual.'),
+		(25, 'Single Axis Mosaic', 'IPA', 5, 6.5, 'https://kaedrin.com/beerblog/wp-content/uploads/sites/3/2021/01/humanrobot-singleaxiscitra.jpg','This beautiful IPA is hopped exclusively with an overwhelming amount of luscious Mosaic. Close your eyes and take a magic carpet ride through fields of blueberry hubba bubba, mixed berry compote and mango jelly.'),
+		(26, 'Formation 2020', 'IPA', 8, 6.2, 'https://www.fermenteryform.com/wp-content/uploads/2021/07/52420FAB-37E4-42A6-A1DC-A3E49127FE8E-1024x1024.jpg', 'This batch of Formation was blended from 4 oak barrels of about 1 year in age. This batch is juicy, spicy and with a moderate earthy acidity. Bottles are 750ml, and $18 each. Batch #3 was released in February, 2021.'),
+		(26, 'SLO-MO 2020', 'IPA', 8, 6, 'https://www.fermenteryform.com/wp-content/uploads/2021/07/IMG_3563-768x1024.jpg', 'SLO-MO 2020 was blended from 2 year old barrels from our Solera, and aged on cherry and blackberry purée. It tastes of bright, lush cherries, with just a touch of blackberry jam, finishing light and refreshing. 6%, 750ml, $21 each. Batch #3 was released in February of 2021.'),
+		(26, 'Vieux Selection', 'IPA', 8, 7.5, 'https://www.fermenteryform.com/wp-content/uploads/2020/07/IMG_2559-712x1024.jpg', 'Vieux Selection is the culmination of 3 years of careful beer preservation and maturation in oak barrels. We’ve been inspired to do much of what we do, but the tradition of Belgian Lambic. Our favorite being Geuze, the blend of 1, 2 and 3 year old barrel aged beers. While our process differs from traditional Lambic in significant ways, the inspiration still comes through in the bottle. This beer has complex layers of flavor that come from the careful selection of barrels to blend. The aroma is earthy, minerally and spicy, the taste is a balance of tart fruits, woody resinous sweetness, and pithy bitterness. While being one of the most complex beers we have ever made, it’s still easy to drink. Bottles and draft, 7.5% abv. Released June of 2020.'),
+		(27, 'SOUR BATCH KEHD', 'Raspberry Berliner Weisse', 5,4.6, 'http://cheekymonkeyboston.com/wp-content/uploads/2017/07/3-SOUR.png', 'Light in body, sour tartness upfront with a raspberry candy finish'),
+		(27, 'HARAMBE''S GHOST', 'Double IPA', 8, 8.4, 'http://cheekymonkeyboston.com/wp-content/uploads/2017/07/5-DOUBLE-IPA.png', 'This brew is a big, robust deep amber IPA with a distinctive white, rock head.Hops, citrus, malt, pine, caramel and sweet malt backbone provide for a beautiful balance that finishes with lingering bitternes and citrus.'),
+		(27, 'REBELLIOUS MONK', 'Stout', 6, 6, 'http://cheekymonkeyboston.com/wp-content/uploads/2017/07/4-STOUT.png', 'Deep black in color.Roasted malt, coffee and dark chocolate flavor with subtle hop profile and creamy finish.'),
+		(28, 'GOOD GOOD', 'DOUBLE INDIA PALE ALE', 8, 8, 'https://d3omj40jjfp5tk.cloudfront.net/products/5dc769cdef17f81a69b4d4e6/large.png', 'A hazed-out, new school, fan favorite DIPA, double dry-hopped with a blend of Simcoe, Citra and Centennial hops. This beer boasts a pillowy mouthfeel with soft lingering bitterness. Its big fruity punches are balanced by pangs of spruce sap, pine and notes of resin.'),
+		(28, 'CLASSIC CREAM', 'AMERICAN CREAM ALE', 6, 5, 'https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hca/hcc/15421659414558.png', 'Our quintessential American Cream Ale made for drinking any time, and day. Comprised of Bohemian Pilsner malt and flaked maize, hopped gently with Hallertauer, then fermented low and slow for 3 weeks with a very cool ale strain, this beer is as crisp and easy drinking as they come.'),
+		(28, 'FRUITY DABS', 'DOUBLE INDIA PALE ALE', 9 ,8.7, 'https://d3omj40jjfp5tk.cloudfront.net/products/5ea4bfac2acaf624d1fa621a/large.png', 'A tropical double India Ale Pale, double dry-hopped with Centennial, Citra and Azacca hops, then conditioned on orange peel and vanilla for a citrusy punch. This tropical DIPA boasts distinct citrus tones with creamsicle and vanilla vibes, balanced by a hazy and resinous mouthfeel.'),
+		(29, 'I SAID WHAT I SAID', 'KEY LIME MARGARITA SOUR',4, 5, 'https://assets.untappd.com/site/beer_logos_hd/beer-4787185_c528f_hd.jpeg', 'This light blonde ale has been fermented with a special hybrid sour yeast for the perfect level of acidic tartness and then dosed with natural margarita flavor. No blender required.'),
+		(29, 'THERE’S NO CRYING IN BASEBALL', 'HAZY MANGO IPA', 8, 6, 'https://assets.untappd.com/site/beer_logos_hd/beer-3692046_f4843_hd.jpeg', 'A hazy IPA with natural mango flavor and a wicked curveball. Light, hazy, and refreshing, this beer is packed with flavor from hefty dry-hopping and natural mango. You could say it’s in a league of its own.'),
+		(29, 'PURPLE MONKEY DISHWASHER', 'CHOCOLATE PEANUTBUTTER PORTER', 8, 6.7, 'https://dth50iqs19w2y.cloudfront.net/de/f527aeb0344a089545a5b77dd59c9d/Evil-Genius-Purple-Monkey-Dishwasher-Chocolate-Peanut-Butter-Porter.png', 'If candy and beer had a beautiful liquid baby. Do you like chocolate and peanut butter but hate all that pesky chewing? Give your teeth a vacation with our rich, full-bodied chocolate peanut butter porter.'),
+		(30, 'Daddy Fat Sacks', 'IPA - American', 3, 6, 'https://images.squarespace-cdn.com/content/v1/53397a25e4b012d5a0b5039f/1449962985396-1TBTDUSDQ5YUH9ZN3LDJ/image-asset.jpeg', 'Our flagship IPA, named for all the fat sacks of dank hops that are used in the dry hop. Brewed with quality American 2-Row leaving a blank slate for the hops to explode. Hopped lightly during the boil and dry hopped excessively with Citra and Cascade. An awesomely dry IPA with tropical fruit and grapefruity goodness.'),
+		(30, 'Sour Hound', 'American Sour Ale', 4, 4, 'https://images.squarespace-cdn.com/content/v1/53397a25e4b012d5a0b5039f/1443123066845-EAZC659GZ4T9J86W2CVR/image-asset.jpeg', 'Tart and fruity, this traditional German wheat ale gets kettle soured and is fermented with fresh blueberries and blackberries. This red ale is sour, refreshing and reeks of fruit.'),
+		(30, 'Ludwigs Revenge', 'German Style Dark Lager', 5, 5.25, 'https://images.squarespace-cdn.com/content/v1/53397a25e4b012d5a0b5039f/1442789321962-LNYVCPKO6ZRAF5W0G6PT/image-asset.png', 'A smooth brown toasty German lager that expresses the beauty of malt. We emulate the traditional style that has always been popular in Germany and give it our own artistic twist. Malty, caramel, meaty, full bodied but clean.'),
+		(31, 'El Capitan', ' Lager - Pale', 5, 4.8, 'https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/ha6/h00/15233811709982.png', 'A Mexican-style Cerveza that is light and crisp. A lager brewed with Flaked Corn to deliver an extra dry finish. This beer is highly effervescent and extremely refreshing.'),
+		(31, 'Almanac', 'German-Style Pilsner', 6, 6.1, 'https://d3omj40jjfp5tk.cloudfront.net/products/61be9f6fb48440379370d52d/large.png', 'LOVE is bursting with hoppy tropical flavors. Built on a simple base of Pilsner malt and rolled oats, this super dank IPA has a pillowy mouthfeel and is double dry-hopped with Mosaic, Citra and Simcoe. Flavors of mango, cantaloupe, and citrus will keep you infatuated.'),
+		(31, 'Foreign Objects Wet Gravity', 'Dry Stout', 5, 5, 'https://d3omj40jjfp5tk.cloudfront.net/products/608c0760fb70287e109b0cf3/large.png', 'The density of our beloved hop essence in this gorgeous silken beer drips down from your head and soaks your feet. We hopped this densely with the eternally saturating Citra and Azacca hop varieties. The aromas of passion fruit, mango, and deep citrus-resin will drag you down by the river''s edge like rocks in your pockets, showing through like the deep brainsqueals and infinite pulse of gravity clinging to your senses and calling you home from across the furthest extremes of creation immensity.'),
+		(32, 'New Belgium Voodoo Ranger', 'Hazy Imperial IPA',8, 9.5, 'https://d3omj40jjfp5tk.cloudfront.net/products/630e3e5a432ffb2599149217/large.png', 'Juice Force is a fruit forward, highly drinkable, 9.5% ABV blast. Buckle up, with this hazy IPA you''ll be buzzing the tower in no time.'),
+		(32, '21st Amendment Down To Earth Session IPA', 'IPA',6 ,4.4, 'https://d3omj40jjfp5tk.cloudfront.net/products/5831dedd36d5f325c901fdcd/large.png', 'Whether you have a long mission behind you or a full afternoon ahead, this session IPA will help keep things real. More relaxed than an IPA, but with all the hop aroma and flavor, Down to Earth is our tribute to unsung heroes and unplanned adventures. Down to Earth is the natural evolution (pun intended) of Bitter American, our original session ale. We thought it would be fitting to bring our space chimp home and let him chill. Down to Earth is available year-round in 6 pack cans and on draft and pairs nicely with a variety of things, including lunch.'),
+		(32, 'Hoptimum', 'IPA - Triple', 8, 11, 'https://d3omj40jjfp5tk.cloudfront.net/products/60886fdee2bc5a7c7e90d92a/large.png', 'A group of hop-heads and publicans challenged our Beer Camp brewers to push the extremes of whole-cone hop brewing. The result is this: a 100 IBU, whole-cone hurricane of flavor. Simply put —Hoptimum: the biggest whole-cone IPA we have ever produced. Aggressively hopped, dry-hopped, AND torpedoed with our exclusive new hop varieties for ultra-intense flavors and aromas.Resinous “new-school” and exclusive hop varieties carry the bold and aromatic nose. The flavor follows the aroma with layers of aggressive hoppiness, featuring notes of grapefruit rind, rose, lilac, cedar, and tropical fruit—all culminating in a dry and lasting finish');
+
+
+/***********************************************************************************************************
+ Populating time
+***********************************************************************************************************/
+INSERT INTO public.time(brewery_id, day, open_time, close_time, open) VALUES
+	(1, 0, 8, 11, true),
+	(1, 1, 8, 11, true),
+	(1, 2, 8, 11, true),
+	(1, 3, 8, 11, true),
+	(1, 4, 8, 11, true),
+	(1, 5, 8, 11, true),
+	(1, 6, 8, 11, false),
+	(2, 0, 9, 11, false),
+    (2, 1, 9, 11, false),
+    (2, 2, 9, 11, true),
+    (2, 3, 9, 11, true),
+    (2, 4, 9, 11, true),
+    (2, 5, 9, 11, true),
+    (2, 6, 9, 11, false),
+    (3, 0, 5, 12, false),
+    (3, 1, 5, 12, false),
+    (3, 2, 5, 12, false),
+    (3, 3, 5, 12, false),
+    (3, 4, 5, 12, true),
+    (3, 5, 5, 12, true),
+    (3, 6, 5, 12, true),
+    (4, 0, 8, 11, true),
+    (4, 1, 8, 11, true),
+    (4, 2, 8, 11, true),
+    (4, 3, 8, 11, true),
+    (4, 4, 8, 11, true),
+    (4, 5, 8, 11, true),
+    (4, 6, 8, 11, false),
+    (5, 0, 9, 11, false),
+    (5, 1, 9, 11, false),
+    (5, 2, 9, 11, true),
+    (5, 3, 9, 11, true),
+    (5, 4, 9, 11, true),
+    (5, 5, 9, 11, true),
+    (5, 6, 9, 11, false),
+    (6, 0, 5, 12, false),
+    (6, 1, 5, 12, false),
+    (6, 2, 5, 12, false),
+    (6, 3, 5, 12, false),
+    (6, 4, 5, 12, true),
+    (6, 5, 5, 12, true),
+    (6, 6, 5, 12, true),
+    (7, 0, 8, 11, true),
+    (7, 1, 8, 11, true),
+    (7, 2, 8, 11, true),
+    (7, 3, 8, 11, true),
+    (7, 4, 8, 11, true),
+    (7, 5, 8, 11, true),
+    (7, 6, 8, 11, false),
+    (8, 0, 8, 11, true),
+    (8, 1, 8, 11, true),
+    (8, 2, 8, 11, true),
+    (8, 3, 8, 11, true),
+    (8, 4, 8, 11, true),
+    (8, 5, 8, 11, true),
+    (8, 6, 8, 11, false);
+
+/***********************************************************************************************************
+ Populating brewewry review
+***********************************************************************************************************/
+INSERT INTO public.brewery_reviews(brewery_id, user_id, rating, review) VALUES
+    (1, 3, 5, 'I was pleasantly surprised! Great beer selection and the food was delicious. Large portions and reasonably priced. A bunch of vegan options, and outdoor seating. Will definitely be returning!'),
+    (1, 4, 5, 'I had one of their IPAs at another restaurant, and it was so good I had to come here. All of their IPAs were flavorful, but actually the most impressive one was the Pilsner! Most pilsners I''ve had up until now were kind of simple and boring, but this one was really delicious, citrusy, and full of character.'),
+    (1, 5, 5, 'Good line up of beers, fries are good. Buffalo cauliflower doesn’t have a hint of Buffalo at all unfortunately. Great breading and very fresh otherwise. Just want that SPICE, the dip page sauce is on point though. Great lil buddy “citywide” too. Cool late night spot to go with friends.'),
+    (2, 3, 5, 'Decided to walk up to Crime and Punishment on a humid end of Summer Saturday. The interior was relaxed and inviting, and service great overall. We grabbed a seat and were treated to several delicious beers and surprisingly good pierogis. Would definitely come back next time we''re in the area!'),
+    (2, 4, 4, 'A cool lowkey spot in Brewerytown. The Space Race IPA was pretty good. Definitely worth a stop if you''re in the neighborhood and like beer.'),
+    (2, 5, 5, 'Small craft brewery. Excellent, friendly staff. We tried several different beers and all were excellent. Tender toward more happy IPA flavors but also had a nice lager, pilsner and one more like a sour. A few small nosh foods. We had awesome pirogies and spicy dipping sauce and pita bread. The pretzels also looked great. Reasonable prices but boy the Philly alcohol AND beer taxes are crazy. On-street parking so may need to park a couple blocks away. Recommend you drop by and give them a try!'),
+    (3, 3, 5, 'Me & girlfriend took the tour which was amazing. Mike was phenomenal & very knowledgeable. Tour is roughly 45 minutes. Very informative. Clean environment, clean place and clean staff! For 10$ a person, I HIGHLY HIGHLY recommend the tour. You get a sample, canned beer & a souvenir. Which would equate to more than 10$. Very nice historical education of yards. 10/10 recommend. Will likely return'),
+    (3, 4, 4, 'Good food. Pretty much something for everyone. Beer is also really really good. When I first went here I didn''t care for what they had on tap but they''ve def added more variety (I''m pretty sure feel free to call me out on being wrong lol). Cool venue. We saw a wedding reception there once. Their merch store is A+. Bought several things there over the course of several trips lol. To put it in perspective, this was the first place my fiance wanted to go to after running the Philadelphia Marathon. She said it was worth it. 💙'),
+    (3, 5, 5, 'Great beer. Great people. Awesome atmosphere. We loved it! Been on our list for awhile and we were so happy to check it off our brewery list! Thanks for making a great experience'),
+    (4, 3, 5, 'Visited Love City Brewing after a concert at Franklin Music Hall and had a wonderful, chill time. The beers were on point and the crowd was all having a great experience. Some more food options would have been nice, but it''s a minor complaint. Highly recommend a visit!'),
+    (4, 4, 5, 'Cool effing place, great beers and cool people pulling the taps! I just popped in on the word of a friend and I’m glad I did. $4 pints happy hour specials until 6:00!'),
+    (4, 5, 5, 'Some excellent and somewhat unique beer options and great service.  No flights offered but the friendly and helpful bartender more than made up for it by her willingness to let us sample a whole bunch.  Dreamcycle and Driponomics were the two standout offerings for us.'),
+    (5, 3, 3, 'Had a great time. Good drinks and watched football all day. However the owners decided they wanted our table and the one next to us. So they told us we had to close out. Day went from a 10 to a 1. Disappointed that patrons would be treated this way. Understandable that they wanted to watch Eagles vs. Cowboys. We planned to watch that game here also and already had a $200 tab. Would I come back again to see if things are different a other weekend? Yes.'),
+    (5, 4, 2, 'I have been to this establishment many times, but have never been disrespected in the way I have tonight. The server, "Devon" approached our table and noticed we already had beers. Thus he refused to serve our table water because we had drinks already, unless we started a tab. There is not an establishment in Philadelphia that would make such a request. Honestly, we got drinks before the table became available and we intended on buying more rounds, but this behavior is unacceptable! If I''m a paying customer, which is clear because we had round of drinks, I should not have to start a tab for WATER! This was the worst service I''ve ever had in a bar in Philly.  My friends and I should not be subjected to this behavior. Please correct this as we would have had many rounds of drinks, but given this behavior, we will spend our money elsewhere. Btw, the bar was not that busy!'),
+    (5, 5, 2, 'Wayyyyy below average. Cocktails are all drowning in lime juice and food all seems to be frozen prior to cooking. Not impressed at all'),
+    (6, 5, 5, NULL),
+    (7, 4, 4, NULL),
+    (8, 4, 5, NULL);
+	
+/***********************************************************************************************************
+ Populating beer review
+***********************************************************************************************************/
+INSERT INTO public.beer_reviews(beer_id, user_id, brewery_id, rating, review) VALUES 
+	(2, 3, 1, 4, 'Pours a clear brown color. 1/2 inch head of an off-tan color. Great retention and great lacing. Smells of hint of smoke, raisin, sweet malt, and a hint of hop. Fits the style of a Munich Dunkel Lager. Mouth feel is smooth and clean, with an average carbonation level. Tastes of raisin, sweet malt, hint of hop. yeast, hint of wheat, hint of roasted malt, and slight spice. Overall, good appearance and feel, but the name implies smoke and it is almost indiscernible. Otherwise a good blend of flavors.'),
+	(8, 3, 2, 3, 'Can from the Packie.Lightly hazy lemon in color with a small bubbly white head that slowly recedes. Juicy citrus and topical fruits with bits of earth and grass. Light bready crackery maltiness, bubbly seltzer. Not bad.'),
+	(12, 1, 3, 3,'Hazy bronze off white head. Smells of passion fruit and pineapple. This beer is on the sweet side. It does have a bite but the carbonation is low and it doesn''t cut through. I think it is OK.'),
+	(16,4, 4, 4,'Hazy bronze off white head. Smells of passion fruit and pineapple. This beer is on the sweet side. It does have a bite but the carbonation is low and it doesn''t cut through. I think it is OK.'),
+	(23, 3, 5, 3,'Poured from a pint can into a snifter glass. Full off-white head with an amber colored body of beer. The aroma of citrus and berries were prevalent on the nose. First sip was of grapefruit, apricots and raspberries, with a nice mildly bitter finish provided by the combination of Amarillo and Citra hops. Another fine DIPA from Housatonic.'),
+	(27, 5, 6, 4, 'Interesting color and smell. Not typical. Feels like it would be best to drink outdoors. A tad more bitter than I prefer but overall good IPA.'),
+	(30, 4, 7, 2, 'Taste: A lot of biscuity malt up front. Balanced out by hops - mostly orange peel and citrus - but not as hoppy as I would expect. Feel: Nice medium body, decent carbonation, and very smooth. Overall: A decent brew, but I had high expectations for such a fresh beer, and it didn''t quite live up to them.'),
+	(32, 1, 8, 3, 'Overall considerably Good. Coffee Flavor defiantly comes through in the tasting notes. The beer itself is somewhat bland, more suited towards a larger Market.'),
+	(38, 4, 9, 5, 'Amber in color, didn''t seem overcarbonated to me. Powerful aromas of citrus fruit, which was also present in the taste, with some maltiness and a decent bitterness. Fairly light in body but OK. Kind of an unorthodox WCIPA due to the Citra, which brings lots of fruity character.'),
+	(39, 5, 10, 5, 'It poured a hazy copper colar with a white head that leaves nice lasing on the glass. It smells and taste of tropical fruit ( mango mostly to me). It has a nice body easy to drink. A good solid IPA to me.'),
+	(45, 3, 11, 3, 'Their naming system is confusing. Two versions on the night howler. Vanilla and Coconut version was stellar.'),
+	(47, 5, 12, 5, 'Excellent pilsner, well done for this brewer at Dock St. South. Clean clear look and taste with extra hopping appreciated. Really easy to drink and great with pizza!'),
+	(52, 4, 13, 4, 'Whirlpooled with Sabro and Mosaic hops after the boil, Tiger Smile is a tropical juice coconut explosion with a slight bit of minty bitterness.  It will put a smile on your face.'),
+	(53, 1, 14, 2, 'Love the name wanted to love the beer couldn’t quite get there. Taste is all over the map and kind of boozy. Wish I had more to say but really that is about all for this one'),
+	(57, 3, 15, 3, 'Deep orange body. Smells of pine resin and tropical fruit sweetness. Tastes of tropical fruit briefly. Toasty malt with some caramel sweetness. Pine and a resiny bitterness in the back end. Dries out and leaves a long bitter aftertaste. Medium body. Good.'),
+	(61, 4, 16, 1, 'Meh, I don''t wanna have to go out to drink it...'),
+	(63, 3, 17, 4, 'Cloudy golden with white lacing. Smells of hop spice, light booze, citrus, light rind. Tastes of papaya, citrus, rind, grass, some bitterness. Not crazy thick. Tastes a lot like Money.'),
+	(65, 4, 18, 5, 'Phenomenal stuff they''ve created. Absolutely checks all my boxes for an IPA and a clearly different take than many other NEIPAs I enjoy. Super refreshing.'),
+	(68, 1, 19, 3, 'Good beer for anyone that is dieting! It is not as good as the regular lager but better than most other light beers I have tried except Yuengling. The taste is fine and the appearace is fine but very pale compared to Yuengling.This beer needs to be very cold for my taste but that is the way I prefer most beers'),
+	(71, 5, 20, 5, 'The taste begins with a wave of very pleasing and natural flavors of peanut butter and marshmallows. This carries the taste, throughout. Midway through, the alcohol makes its presence known, with a warm and mellow note. Late in the taste, there is just a faint kiss of herbal hops, balancing out the sweetness. Finishes with a mild, lingering note of marshmallows.'),
+	(75, 1, 21, 4, ' First comes dark chocolate followed by roasted malts in the middle where they mix with cacao notes and vanilla turning sweet. The sweetness continues into the rear of the palate mixing with coconut but is slightly blunted by some almond nuttiness and more cacao and dark bitter chocolate.'),
+	(78, 3, 22, 2, 'Tart, not excessively sour. Pale slightly hazy pink, moderate head settling quickly to a ring, no lace. Anonymously fruity. Ordinary fruity summer fare.'),
+	(80, 4, 23, 1, 'Mild barley and corn that turns to a slight metal twang as a straw, honey and a mix of earth and mossy hops round out the experience. Kind of upset about the middle of the beer, but the rest does make up for it.'),
+	(83, 1, 24, 3, 'Was definitely better on tap at the venue than from the can. Less sour more sweet from the can, still good though');
+
+;
 
 
 COMMIT;
