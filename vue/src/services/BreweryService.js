@@ -15,6 +15,9 @@ export default {
   },
   updateBrewery(breweryId,brewery){
     return http.put(`/brewery/${breweryId}`,brewery)
+  },
+  deleteBrewery(breweryId) {
+    return http.delete(`/brewery/${breweryId}`)
   }
   
 }

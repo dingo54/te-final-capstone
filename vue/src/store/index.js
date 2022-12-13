@@ -19,6 +19,7 @@ if(currentToken != null) {
 export default new Vuex.Store({
   state: {
     token: currentToken || '',
+    users: [],
     user: currentUser || {},
     showForm:false,
     brewery: {
@@ -61,6 +62,9 @@ export default new Vuex.Store({
       state.token = token;
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    },
+    SET_USERS(state, data){
+      state.users = data;
     },
     SET_USER(state, user) {
       state.user = user;

@@ -24,7 +24,7 @@
 <style>
 :root{
     --yellow: #e5b435;
-    --blue: blue;
+    --blue: #06038D;
     --site-background-color: rgba(30,30,30,1);
     --page-header-font: Montserrat, sans-serif;
     --site-header-font: Ubuntu, sans-serif;
@@ -145,7 +145,7 @@ main #cards article {
 }
 .page hr {
     margin: 10px 0;
-    border: 2px solid black;
+    border-top: 5px solid var(--blue);
     border-radius: 10px;
 }
 .page p {
@@ -227,7 +227,7 @@ input[type="radio"] {
 }
 
 input:checked + label {
-  background-color: rgba(0,0,255,1);
+  background-color: var(--blue);
 }
 input {
   box-sizing: border-box;
@@ -338,6 +338,10 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
+thead th {
+  background-color: var(--blue);
+  color: white;
+}
 tbody td,
 tbody td {
     border: 1px solid #ddd;
@@ -345,6 +349,9 @@ tbody td {
 }
 tbody tr:nth-child(even){background-color: #f2f2f2;}
 tbody tr:hover {background-color: #ddd;}
+table .button {
+  margin:0;
+}
 
 /************************* Device Breakpoints (screen size) ********************************************/
 @media screen and (max-width: 900px) {

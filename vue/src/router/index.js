@@ -11,6 +11,7 @@ import UpdateBeerForm from '../views/UpdateBeerForm.vue'
 import Beer from '../views/Beer.vue'
 import ReviewForm from '../views/ReviewForm.vue'
 import BreweryForm from '../views/BreweryForm.vue'
+import UserReviews from '../views/UserReviews.vue'
 
 Vue.use(Router)
 
@@ -103,6 +104,14 @@ const router = new Router({
       path: "/breweryForm",
       name: 'BreweryForm',
       component: BreweryForm,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/user/:id",
+      name: 'UserReviews',
+      component: UserReviews,
       meta: {
         requiresAuth: true
       }

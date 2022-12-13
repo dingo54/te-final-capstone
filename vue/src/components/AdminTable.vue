@@ -9,8 +9,9 @@
             <th>Phone Number</th>
             <th>Address</th>
             <th>Hours</th>
-            <th>Owner</th>
-            <th>Approve</th>
+            <th>Owner ID</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -21,10 +22,13 @@
             <td>{{brewery.hours}}</td>
             <td>{{brewery.owner}}</td>
             <td><button class="button" v-on:click="approveBrewery(brewery)">Approve</button></td>
+            <td><button class="button" v-on:click="deleteBrewery(brewery.breweryId)">Delete</button></td>
           </tr>
         </tbody>
       </table>
       <p v-if="this.breweries.length===0">There are no breweries to approve.</p>
+      <br />
+      <get-users />
     </div>
   </section>
 </template>
@@ -32,11 +36,14 @@
 <script>
 import adminService from '../services/AdminService';
 import breweryService from "../services/BreweryService";
+import GetUsers from './GetUsers.vue';
 export default {
+  components: { GetUsers },
     name: "admin-table",
     data() {
       return {
-        breweries: []
+        breweries: [],
+        userID: 5
       }
     },
     methods: {
@@ -52,6 +59,14 @@ export default {
             this.getUnapproved();
           }
         });
+      },
+      deleteBrewery(breweryId) {
+        breweryService.deleteBrewery(breweryId).then(response =>{
+          if(response.status===204){
+            this.getUnapproved();
+          }
+        })
+        this.getUnapproved();
       }
     },
     created() {
