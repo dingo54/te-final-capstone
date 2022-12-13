@@ -40,6 +40,13 @@ public class JdbcBreweryDao implements BreweryDao{
             } else {
                 brewery.setRating(rating);
             }
+            sql = "SELECT COUNT(*) FROM public.beer_reviews WHERE brewery_id = ?;";
+            Integer numOfReviews = jdbcTemplate.queryForObject(sql, Integer.class, breweryId);
+            if (numOfReviews == null) {
+                brewery.setNumOfReviews(0);
+            } else {
+                brewery.setNumOfReviews(numOfReviews);
+            }
         }
         return breweries;
     }
@@ -70,6 +77,13 @@ public class JdbcBreweryDao implements BreweryDao{
             brewery.setRating(0);
         } else {
             brewery.setRating(rating);
+        }
+        sql = "SELECT COUNT(*) FROM public.beer_reviews WHERE brewery_id = ?;";
+        Integer numOfReviews = jdbcTemplate.queryForObject(sql, Integer.class, breweryId);
+        if (numOfReviews == null) {
+            brewery.setNumOfReviews(0);
+        } else {
+            brewery.setNumOfReviews(numOfReviews);
         }
         return brewery;
     }

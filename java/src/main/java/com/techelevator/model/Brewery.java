@@ -11,12 +11,13 @@ public class Brewery {
     private int owner;
     private String hours;
     private Integer rating = 0;
+    private Integer numOfReviews = 0;
 
     public Brewery(){
 
     }
 
-    public Brewery(String breweryName, String imageURL, String phoneNumber, String address, boolean isApproved, int owner) {
+    public Brewery(String breweryName, String imageURL, String phoneNumber, String address, boolean isApproved, int owner, Integer numOfReviews) {
         this.breweryName = breweryName;
         this.imageURL = imageURL;
         this.phoneNumber = phoneNumber;
@@ -25,6 +26,7 @@ public class Brewery {
         this.owner = owner;
         this.hours = hours;
         this.rating = rating;
+        this.numOfReviews = numOfReviews;
     }
 
     public String getDescription() {
@@ -97,6 +99,14 @@ public class Brewery {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public int getNumOfReviews() {
+        return numOfReviews;
+    }
+
+    public void setNumOfReviews(Integer numOfReviews) {
+        this.numOfReviews = numOfReviews;
     }
 
     @Override
