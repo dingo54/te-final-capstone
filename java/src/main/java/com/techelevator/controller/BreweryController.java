@@ -40,6 +40,6 @@ public class BreweryController {
         if(breweryId != brewery.getBreweryId()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Brewery Id not found");
         }
-        breweryDao.updateBrewery(breweryId, brewery);
+        breweryDao.updateBreweryAdmin(breweryId, brewery);
     }
 }
