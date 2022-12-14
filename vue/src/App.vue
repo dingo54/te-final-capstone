@@ -286,10 +286,15 @@ textarea {
 .add {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
+  gap: 0 !important;
   background-color: grey;
   height: 100%;
   color: white;
+  font-size: 30px;
+}
+.plus {
   font-size: 100px;
 }
 /************************* Beer List ********************************************/
