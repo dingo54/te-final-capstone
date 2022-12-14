@@ -83,16 +83,16 @@ CREATE TABLE beer_reviews (
 );
 
 
-INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('PhillyFan4Life','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$10$yM5uZTKxLgY5LQcZzY54DuRSiB7q0amH0r.wMLsbSfWpLn3wh/BGe','ROLE_ADMIN');
-INSERT INTO users (username,password_hash,role) VALUES ('user3','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
-INSERT INTO users (username,password_hash,role) VALUES ('user4','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
-INSERT INTO users (username,password_hash,role) VALUES ('user5','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
-INSERT INTO users (username,password_hash,role) VALUES ('user6','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_BREWER');
-INSERT INTO users (username,password_hash,role) VALUES ('user7','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_BREWER');
-INSERT INTO users (username,password_hash,role) VALUES ('user8','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_BREWER');
-INSERT INTO users (username,password_hash,role) VALUES ('user9','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_BREWER');
-INSERT INTO users (username,password_hash,role) VALUES ('user10','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_BREWER');
+INSERT INTO users (username,password_hash,role) VALUES ('RealKevinSmith','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('BeerLover42','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('SopranosFan555','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('brewer','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_BREWER');
+INSERT INTO users (username,password_hash,role) VALUES ('MiracleF','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_BREWER');
+INSERT INTO users (username,password_hash,role) VALUES ('GianniP','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_BREWER');
+INSERT INTO users (username,password_hash,role) VALUES ('KevinSmith','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_BREWER');
+INSERT INTO users (username,password_hash,role) VALUES ('ryanm','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_BREWER');
 
 
 
@@ -454,12 +454,55 @@ INSERT INTO public.beer_reviews(beer_id, user_id, brewery_id, rating, review) VA
 	(15, 3, 4, 4, 'Quite the beverage'),
 	(15, 4, 4, 3, 'Ho portato mia moglie qui e lei adorava la bevanda'),
 	(15, 5, 4, 1, 'Fantastico!'),
-	(15, 6, 4, 5, 'really good tbh')
-
-
-
-
-
+	(15, 6, 4, 5, 'really good tbh'),
+	(19, 1, 5, 5, 'This beer was so good I had to bring my wife here!'),
+	(19, 3, 5, 4, 'really good tbh'),
+	(19, 4, 5, 4, 'Bought this for 83p. Hard to knock it at that price. A bit on the malty side but quite drinkable'),
+	(19, 5, 5, 4, 'Fantastico! Dovrò portare mia madre qui per provare questa birra'),
+	(19, 7, 5, 5, 'I was genuinely impressed'),
+	(19, 10, 5, 5, 'this beer was OUTSTANDING'),
+	(20, 1, 5, 5, 'Pours a clear brown color. 1/2 inch head of an off-tan color. Great retention and great lacing. Smells of hint of smoke, raisin, sweet malt, and a hint of hop. Fits the style of a Munich Dunkel Lager. Mouth feel is smooth and clean, with an average carbonation level. Tastes of raisin, sweet malt, hint of hop. yeast, hint of wheat, hint of roasted malt, and slight spice. Overall, good appearance and feel, but the name implies smoke and it is almost indiscernible. Otherwise a good blend of flavors.'),
+	(20, 3, 5, 4, 'really good tbh'),
+	(20, 4, 5, 4, 'Bought this for 83p. Hard to knock it at that price. A bit on the malty side but quite drinkable'),
+	(20, 5, 5, 4, 'Fantastico! Dovrò portare mia madre qui per provare questa birra'),
+	(20, 7, 5, 5, 'I was genuinely impressed'),
+	(20, 10, 5, 5, 'this beer was OUTSTANDING'),
+	(21, 10, 5, 5, 'Very delicous!'),
+	(21, 7, 5, 4, 'really good tbh'),
+	(21, 5, 5, 4, 'Molto bene. voglio di più'),
+	(21, 4, 5, 3, 'I mean it was alright I guess'),
+	(21, 3, 5, 5, 'reeeeally good'),
+	(21, 1, 5, 5, 'this beer was AMAZING'),		
+	(46, 10, 13, 5, 'Very delicous!'),
+	(46, 7, 13, 4, 'really good tbh'),
+	(46, 5, 13, 5, 'birra fantastica'),
+	(46, 4, 13, 3, 'I mean it was alright I guess'),
+	(46, 3, 13, 5, 'reeeeally good'),
+	(46, 1, 13, 2, 'wasn''t feeling it AT ALL'),	
+	(47, 10, 13, 5, 'Very delicous!'),
+	(47, 7, 13, 3, 'i mean... it was ok. not bad. what I buy it again? Uhhh, probably not'),
+	(47, 5, 13, 4, 'Molto bene. voglio di più'),
+	(47, 4, 13, 3, 'I mean it was alright I guess'),
+	(47, 3, 13, 5, 'reeeeally good'),
+	(47, 1, 13, 5, 'this beer was AMAZING'),
+	(73, 10, 22, 5, 'Very delicous!'),
+	(73, 7, 22, 3, 'i mean... it was ok. not bad. what I buy it again? Uhhh, probably not'),
+	(73, 5, 22, 4, 'Molto bene. voglio di più'),
+	(73, 4, 22, 3, 'I mean it was alright I guess'),
+	(73, 3, 22, 5, 'reeeeally good'),
+	(73, 1, 22, 5, 'this beer was AMAZING'),
+	(123, 10, 38, 5, 'Very delicous!'),
+	(123, 7, 38, 3, 'i mean... it was ok. not bad. what I buy it again? Uhhh, probably not'),
+	(123, 5, 38, 4, 'Molto bene. voglio di più'),
+	(123, 4, 38, 3, 'I mean it was alright I guess'),
+	(123, 3, 38, 5, 'reeeeally good'),
+	(123, 1, 38, 5, 'this beer was AMAZING'),	
+	(124, 10, 38, 5, 'Very delicous!'),
+	(124, 7, 38, 3, 'i mean... it was ok. not bad. what I buy it again? Uhhh, probably not'),
+	(124, 5, 38, 4, 'Molto bene. voglio di più'),
+	(124, 4, 38, 3, 'I mean it was alright I guess'),
+	(124, 3, 38, 5, 'reeeeally good'),
+	(124, 1, 38, 5, 'this beer was AMAZING')	
 	;
 
 
