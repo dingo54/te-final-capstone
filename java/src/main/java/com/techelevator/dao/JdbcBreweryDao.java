@@ -33,10 +33,10 @@ public class JdbcBreweryDao implements BreweryDao{
 
         for(Brewery brewery : breweries){
             int breweryId = brewery.getBreweryId();
-            sql = "SELECT ROUND(AVG(rating),2) as rating FROM public.beer_reviews WHERE brewery_id=?;";
+            sql = "SELECT ROUND(AVG(rating),1) as rating FROM public.beer_reviews WHERE brewery_id=?;";
             Double rating = jdbcTemplate.queryForObject(sql, Double.class, breweryId);
             if (rating == null) {
-                brewery.setRating(5.0);
+                brewery.setRating(0.0);
             } else {
                 brewery.setRating(rating);
             }

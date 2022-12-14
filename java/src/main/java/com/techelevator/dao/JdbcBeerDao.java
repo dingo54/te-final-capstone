@@ -97,7 +97,9 @@ public class JdbcBeerDao implements BeerDao {
 
     @Override
     public boolean delete(int beerId) {
-            String sql = "DELETE FROM public.beer WHERE beer_id = ?;";
+            String sql = "DELETE FROM public.beer_reviews WHERE beer_id = ?;";
+            jdbcTemplate.update(sql, beerId);
+            sql = "DELETE FROM public.beer WHERE beer_id = ?;";
             int numOfRowsDeleted = jdbcTemplate.update(sql, beerId);
             return numOfRowsDeleted == 1;
         }
