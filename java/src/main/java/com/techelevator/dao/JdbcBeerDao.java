@@ -24,8 +24,8 @@ public class JdbcBeerDao implements BeerDao {
     @Override
     public List<Beer> getListOfBeers() {
         List<Beer> beers = new ArrayList<>();
-        String sql = "SELECT beer_id, brewery_id, name, style, price, abv, image, description\n" +
-                "\tFROM public.beer;";
+        String sql = "SELECT beer_id, brewery_id, name, style, price, abv, image, description " +
+                "FROM public.beer ORDER BY name ASC;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql);
         while (result.next()){
             beers.add(mapRowToBeer(result));
@@ -37,7 +37,7 @@ public class JdbcBeerDao implements BeerDao {
     public List<Beer> getAllBeersByBreweryId(int breweryId) {
         List<Beer> beers = new ArrayList<>();
         String sql = "SELECT beer_id, brewery_id, name, style, price, abv, image, description\n" +
-                "\tFROM public.beer WHERE brewery_id = ?;";
+                "\tFROM public.beer WHERE brewery_id = ? ORDER BY name ASC;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql, breweryId);
         while (result.next()){
             beers.add(mapRowToBeer(result));
@@ -68,9 +68,9 @@ public class JdbcBeerDao implements BeerDao {
         newBeer.setImage(beer.getImage());
         newBeer.setDescription(beer.getDescription());
         newBeer.setAbv(beer.getAbv());
-        String sql="INSERT INTO public.beer(\n" +
-                "\tbrewery_id, name, style, price, abv, image, description)\n" +
-                "\tVALUES (?, ?, ?, ?, ?, ?, ?) RETURNING beer_id;";
+        String sql="INSERT INTO public.beer" +
+                "(brewery_id, name, style, price, abv, image, description) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING beer_id;";
         int beer_id = jdbcTemplate.queryForObject(sql,int.class,newBeer.getBreweryId(),newBeer.getName(),newBeer.getStyle(),newBeer.getPrice(),newBeer.getAbv(),newBeer.getImage(),newBeer.getDescription());
         newBeer.setBeerId(beer_id);
         return newBeer;
@@ -87,9 +87,9 @@ public class JdbcBeerDao implements BeerDao {
             newBeer.setImage(beer.getImage());
             newBeer.setDescription(beer.getDescription());
             newBeer.setAbv(beer.getAbv());
-            String sql="UPDATE public.beer\n" +
-                    "\tSET brewery_id=?, name=?, style=?, price=?, abv=?, image=?, description=?\n" +
-                    "\tWHERE beer_id=?;";
+            String sql="UPDATE public.beer " +
+                    "SET brewery_id=?, name=?, style=?, price=?, abv=?, image=?, description=? " +
+                    "WHERE beer_id=?;";
             int rowsUpdated = jdbcTemplate.update(sql,newBeer.getBreweryId(),newBeer.getName(),newBeer.getStyle(),newBeer.getPrice(),newBeer.getAbv(),newBeer.getImage(),newBeer.getDescription(),newBeer.getBeerId());
             return rowsUpdated==1;
 

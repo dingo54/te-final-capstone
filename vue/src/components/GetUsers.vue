@@ -15,7 +15,7 @@
                   <td>{{user.id}}</td>
                   <td>{{user.username}}</td>
                   <td>{{user.authorities[0].name}}</td>
-                  <td><button class="button" v-on:click="viewUserReviews(user.id)">View User's Reviews</button></td>
+                  <td><button class="button" v-on:click="viewUserReviews(user.id)" v-show="user.authorities[0].name===userRole">View User's Reviews</button></td>
               </tr>
           </tbody>
       </table>
@@ -28,7 +28,9 @@ export default {
     name: "get-users",
     data() {
         return {
-            users: []
+            users: [],
+            admin: 'ROLE_ADMIN',
+            userRole: 'ROLE_USER',
         }
     },
     methods: {

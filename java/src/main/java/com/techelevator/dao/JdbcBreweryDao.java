@@ -25,7 +25,7 @@ public class JdbcBreweryDao implements BreweryDao{
     public List<Brewery> getAllBreweries() {
         List<Brewery> breweries = new ArrayList<>();
         String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description\n, is_approved, owner, hours" +
-                "\tFROM public.brewery WHERE is_approved = true;";
+                "\tFROM public.brewery WHERE is_approved = true ORDER BY brewery_name ASC;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql);
         while(result.next()){
             breweries.add(mapToBrewery(result));
@@ -54,7 +54,7 @@ public class JdbcBreweryDao implements BreweryDao{
     public List<Brewery> getAllUnapprovedBreweries() {
         List<Brewery> breweries = new ArrayList<>();
         String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description\n, is_approved, owner, hours" +
-                "\tFROM public.brewery WHERE is_approved = false;";
+                "\tFROM public.brewery WHERE is_approved = false ORDER BY brewery_name ASC;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql);
         while(result.next()){
             breweries.add(mapToBrewery(result));
@@ -99,9 +99,9 @@ public class JdbcBreweryDao implements BreweryDao{
         newBrewery.setDescription(brewery.getDescription());
         newBrewery.setIsApproved(false);
         newBrewery.setOwner(brewery.getOwner());
-        String sql="INSERT INTO public.brewery(\n" +
-                "\tbrewery_name, phone_number, address, hours, image_url, description, is_approved, owner)\n" +
-                "\tVALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING brewery_id;";
+        String sql="INSERT INTO public.brewery" +
+                "(brewery_name, phone_number, address, hours, image_url, description, is_approved, owner) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING brewery_id;";
         int breweryId = jdbcTemplate.queryForObject(sql, int.class, newBrewery.getBreweryName(),newBrewery.getPhoneNumber(),newBrewery.getAddress(), newBrewery.getHours(), newBrewery.getImageURL(), newBrewery.getDescription(), false, newBrewery.getOwner());
         newBrewery.setBreweryId(breweryId);
         return newBrewery;
@@ -130,9 +130,9 @@ public class JdbcBreweryDao implements BreweryDao{
     @Override
     public List <Brewery> getAllBreweriesByUserId(int userId) {
         List <Brewery> brewery = new ArrayList<>();
-        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description, is_approved, owner, hours\n" +
-                "\tFROM public.brewery\n" +
-                "\tWHERE owner = ?;";
+        String sql = "SELECT brewery_id, brewery_name, phone_number, address, image_url, description, is_approved, owner, hours " +
+                "FROM public.brewery " +
+                "WHERE owner = ? ORDER BY brewery_name ASC;";
         SqlRowSet result= jdbcTemplate.queryForRowSet(sql, userId);
         while(result.next()){
            brewery.add(mapToBrewery(result));

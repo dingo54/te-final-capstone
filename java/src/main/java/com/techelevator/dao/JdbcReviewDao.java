@@ -23,7 +23,8 @@ public class JdbcReviewDao implements ReviewDao {
     public List<Review> getListOfReviews() {
         List<Review> reviews = new ArrayList<>();
         String sql = "SELECT review_id, beer_id, username, users.user_id, brewery_id, rating, review " +
-                "FROM public.beer_reviews JOIN users ON users.user_id = beer_reviews.user_id;";
+                "FROM public.beer_reviews JOIN users ON users.user_id = beer_reviews.user_id " +
+                "ORDER BY review_id DESC;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql);
         while (result.next()){
             reviews.add(mapRowToReview(result));
@@ -36,7 +37,7 @@ public class JdbcReviewDao implements ReviewDao {
         List<Review> reviews = new ArrayList<>();
         String sql = "SELECT review_id, beer_id, username, users.user_id, brewery_id, rating, review " +
                 "FROM public.beer_reviews JOIN users ON users.user_id = beer_reviews.user_id " +
-                "WHERE beer_id=?;";
+                "WHERE beer_id=? ORDER BY review_id DESC;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql,beerId);
         while (result.next()){
             reviews.add(mapRowToReview(result));
@@ -49,7 +50,7 @@ public class JdbcReviewDao implements ReviewDao {
         List<Review> reviews = new ArrayList<>();
         String sql = "SELECT review_id, beer_id, username, users.user_id, brewery_id, rating, review " +
                 "FROM public.beer_reviews JOIN users ON users.user_id = beer_reviews.user_id " +
-                "WHERE brewery_id=?;";
+                "WHERE brewery_id=? ORDER BY review_id DESC;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql,breweryId);
         while (result.next()){
             reviews.add(mapRowToReview(result));
@@ -62,7 +63,7 @@ public class JdbcReviewDao implements ReviewDao {
         List<Review> reviews = new ArrayList<>();
         String sql = "SELECT review_id, beer_id, username, users.user_id, brewery_id, rating, review FROM public.beer_reviews " +
                 "JOIN users ON users.user_id = beer_reviews.user_id " +
-                "WHERE users.user_id=?;";
+                "WHERE users.user_id=? ORDER BY review_id DESC;";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql,userId);
         while (result.next()){
             reviews.add(mapRowToReview(result));
